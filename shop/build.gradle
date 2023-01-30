@@ -29,6 +29,12 @@ dependencies {
 	
 	// .jsp 사용 위해
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+	
+	// security dependency 추가
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// jstl 라이브러리 추가
+	implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:2.0.0'
 
 }
 
