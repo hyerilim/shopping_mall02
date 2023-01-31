@@ -39,6 +39,20 @@ dependencies {
 	// h2 데이터베이스 테스트용
 	testImplementation 'com.h2database:h2:2.1.214'
 
+	// STMP 메일 전송 관련 라이브러리
+	// https://mvnrepository.com/artifact/jakarta.mail/jakarta.mail-api
+	implementation 'jakarta.mail:jakarta.mail-api:2.1.0'
+
+
+	// JavaMailSender 인터페이스(JavaMailSenderImpl)를 사용하기 위해 필요로 합니다. 
+	// mail 라이브러리를 일일이 세팅을 할 필요 없이 몇 가지의 설정(MailSender Bean설정)만으로도 사용될 수 있도록 도와줍니다.
+	// JavaMailSender 인터페이스는 MIME 형식의 메일을 보낼 수 있도록 해줍니다.(javax.mail.MimeMessage 사용 가능)
+	// 스프링 프레임웍에서는 기본적으로 JavaMailSender 인터페이스와 비슷한 역할을 하는 메인 인터페이스 MainSender가 있습니다. 
+	// 하지만 MainSender는 SimpleMailMessage만 사용 가능합니다. (javax.mail.MimeMessage 사용 불가능)
+	// SimpleMailMessage는 단순한 텍스트 메시지만 사용할 수 있고, MimeMessage는 텍스트와 더불어 이미지와 같은 첨부파일을 같이 메시지에 포함시킬 수 있습니다.
+	// https://mvnrepository.com/artifact/org.springframework/spring-context-support
+	implementation 'org.springframework:spring-context-support:6.0.3'
+
 }
 
 tasks.named('test') {

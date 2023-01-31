@@ -261,3 +261,13 @@
 	color : red;
 	display : none;
 }
+
+/* 추후 이메일 전송이 완료되었을 때 회색 */
+#mail_check_input_box_false{
+    background-color:#ebebe4;
+}
+
+/* 추후 이메일 전송이 완료되었을 때 흰색 */ 
+#mail_check_input_box_true{
+    background-color:white;
+}
