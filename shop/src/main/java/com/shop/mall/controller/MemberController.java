@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shop.mall.dto.MemberFormDto;
 import com.shop.mall.entity.Member;
@@ -70,6 +71,28 @@ public class MemberController {
 
 		return "redirect:/members/login";
 	}
+	
+	// 아이디 중복 검사
+	@PostMapping(value = "/emailChk")
+	@ResponseBody
+	public String emailChkPOST(String email) throws Exception{
+		
+//		logger.info("memberIdChk() 진입");
+		
+		String result = memberService.emailCheck(email);
+		
+		logger.info("결과값 = " + result);
+		
+		if(result != null) {
+			
+			return "fail";	// 중복 아이디가 존재
+			
+		} else {
+			
+			return "success";	// 중복 아이디 x
+			
+		}	
+	} // emailChkPOST() 종료	
 
 	// 로그인 페이지 이동
 	@GetMapping(value = "/login")

@@ -1,8 +1,11 @@
 package com.shop.mall.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.shop.mall.dto.MemberFormDto;
 import com.shop.mall.entity.Member;
 import com.shop.mall.repository.MemberRepository;
 
@@ -36,6 +39,17 @@ public class MemberServiceImpl implements MemberService {
 			throw new IllegalStateException("이미 가입된 회원입니다.");
 		}
 		
+	}
+
+	// 이메일 중복체크
+	@Override
+	public String emailCheck(String email) throws Exception {
+		Member member = memberRepository.findByEmail(email);
+		if(member != null) {
+			return member.getEmail();
+		}
+		
+		return null;
 	};
 	
 }

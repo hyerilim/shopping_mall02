@@ -28,20 +28,21 @@
 					<div class="mail_input_box">
 						<input class="mail_input" name="email">
 					</div>
-					<span class="final_mail_ck">이메일을 입력해주세요.</span>
-					<span class="mail_input_box_warn"></span>
-					
+					<span class="email_input_re_1">사용 가능한 이메일입니다.</span> <span
+						class="email_input_re_2">이메일이 이미 존재합니다.</span> <span
+						class="mail_input_box_warn"></span>
+
 					<div class="mail_check_wrap">
-					<div class="mail_check_input_box" id="mail_check_input_box_false">
-						<input class="mail_check_input" disabled="disabled">
+						<div class="mail_check_input_box" id="mail_check_input_box_false">
+							<input class="mail_check_input" disabled="disabled">
+						</div>
+
+						<div class="mail_check_button">
+							<span>인증번호 전송</span>
+						</div>
+						<div class="clearfix"></div>
+						<span id="mail_check_input_box_warn"></span>
 					</div>
-					
-					<div class="mail_check_button">
-						<span>인증번호 전송</span>
-					</div>
-					<div class="clearfix"></div>
-					<span id="mail_check_input_box_warn"></span>
-				</div>
 				</div>
 
 				<div class="pw_wrap">
@@ -57,9 +58,9 @@
 					<div class="pwck_input_box">
 						<input class="pwck_input">
 					</div>
-					<span class="final_pwck_ck">비밀번호 확인을 입력해주세요.</span>
-					<span class="pwck_input_re_1">비밀번호가 일치합니다.</span>
-					<span class="pwck_input_re_2">비밀번호가 일치하지 않습니다.</span>
+					<span class="final_pwck_ck">비밀번호 확인을 입력해주세요.</span> <span
+						class="pwck_input_re_1">비밀번호가 일치합니다.</span> <span
+						class="pwck_input_re_2">비밀번호가 일치하지 않습니다.</span>
 				</div>
 
 				<div class="user_wrap">
@@ -74,7 +75,7 @@
 					<div class="address_name">주소</div>
 					<div class="address_input_1_wrap">
 						<div class="address_input_1_box">
-							<input class="address_input_1" name="addressNo" >
+							<input class="address_input_1" name="addressNo">
 						</div>
 						<div class="address_button">
 							<span>주소 찾기</span>
@@ -102,14 +103,43 @@
 		</form>
 	</div>
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		//회원가입 버튼(회원가입 기능 작동)
-		$(".join_button").click(function() {
-			$("#join_form").submit();
+	<script type="text/javascript">
+		$(document).ready(function() {
+			//회원가입 버튼(회원가입 기능 작동)
+			$(".join_button").click(function() {
+				$("#join_form").submit();
+			});
 		});
-	});
-</script>
+
+		//아이디 중복검사
+		$('.mail_input').on("propertychange change keyup paste input",
+				function() {
+
+					/* console.log("keyup 테스트");	 */
+
+					var email = $('.mail_input').val(); // .mail_input에 입력되는 값
+					var data = {
+						email : email
+					} // '컨트롤에 넘길 데이터 이름' : '데이터(.mail_input에 입력되는 값)'
+
+					$.ajax({
+						type : "post",
+						url : "/members/emailChk",
+						data : data,
+						success : function(result){
+							 // console.log("성공 여부" + result);
+							 if(result != 'fail'){
+									$('.email_input_re_1').css("display","inline-block");
+									$('.email_input_re_2').css("display", "none");				
+								} else {
+									$('.email_input_re_2').css("display","inline-block");
+									$('.email_input_re_1').css("display", "none");				
+								}
+						} // success 종료
+					}); // ajax 종료	
+
+				}); // function 종료
+	</script>
 
 </body>
 </html>
