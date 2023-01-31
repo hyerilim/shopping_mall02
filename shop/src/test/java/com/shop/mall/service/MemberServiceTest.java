@@ -1,6 +1,7 @@
 package com.shop.mall.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,5 +58,23 @@ class MemberServiceTest {
 		assertEquals(member.getPassword(), savedMember.getPassword());
 		assertEquals(member.getRole(), savedMember.getRole());
 	}
-
+	
+	@Test
+	@DisplayName("중복 회원 가입 테스트")
+	public void saveDuplicateMemberTest() throws Exception {
+		Member member1 = createMember();
+		Member member2 = createMember();
+		memberService.saveMember(member1);
+		
+		// Junit의 Assertions 클래스의 assertThrows 메소드를 이용하면 예외 처리 테스트가 가능합니다.
+		// 첫 번째 파라미터에는 발생할 예외 타입을 넣어줍니다.
+		Throwable e = assertThrows(IllegalStateException.class, () -> {
+			memberService.saveMember(member2);
+		});
+		
+		// 발생한 예외 메시지가 예상 결과와 맞는지 검증합니다.
+		assertEquals("이미 가입된 회원입니다.", e.getMessage());
+		
+		
+	}
 }
