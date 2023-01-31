@@ -1,5 +1,7 @@
 package com.shop.mall.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -33,5 +35,15 @@ public class ItemImg{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="item_id")
     private Item item;
+    
+    private LocalDateTime regTime;  //등록 시간
+
+    private LocalDateTime updateTime;   //수정 시간
+    
+    public void updateItemImg(String oriImgName,String imgName, String imgUrl) {
+    	this.oriImgName = oriImgName;
+    	this.imgName = imgName;
+    	this.imgUrl = imgUrl;
+    }
 
 }

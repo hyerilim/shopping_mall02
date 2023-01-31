@@ -2,8 +2,12 @@ package com.shop.mall.entity;
 
 import java.time.LocalDateTime;
 
+import com.shop.mall.constant.ItemSellStatus;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,7 +30,7 @@ public class Item {
     private Long id;    //상품코드
 
     @Column(nullable= false, length=50)
-    private String itemNum; //상품명
+    private String itemNm; //상품명
 
     @Column(name="price", nullable=false)
     private int price;  // 가격
@@ -38,8 +42,8 @@ public class Item {
     @Column(nullable=false)
     private String itemDetail;  //상품 상세 설명
 
-    //@Enumerated(EnumType.STRING)
-    //private ItemSellStatus itemSellStatus;  //상품 판매 상태
+    @Enumerated(EnumType.STRING)
+    private ItemSellStatus itemSellStatus;  //상품 판매 상태
 
     private LocalDateTime regTime;  //등록 시간
 
