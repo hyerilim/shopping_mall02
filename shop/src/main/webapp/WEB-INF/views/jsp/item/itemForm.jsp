@@ -66,7 +66,7 @@
 		<textarea id="itemDetail" name="itemDetail" class="form-control" aria-label="With textarea">${itemDetail}</textarea>	
 	</div>
 	
-	<a href="/admin/item/${id}" type="submit" class="btn btn-primary">저장</a>
+	<a href="/admin/item/new" type="submit" class="btn btn-primary">저장</a>
 	
 </form>
 
