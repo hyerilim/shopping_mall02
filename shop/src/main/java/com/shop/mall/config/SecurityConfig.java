@@ -14,8 +14,8 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-		return null;
+		http.csrf().disable();
+		return http.build();
 	}
 
 	// 비밀번호를 암호화하여 저장합니다.

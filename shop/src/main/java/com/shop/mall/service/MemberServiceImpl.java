@@ -22,7 +22,7 @@ public class MemberServiceImpl implements MemberService {
 	// 빈에 생성자가 1개이고 생성자의 파라미터 타입이 빈으로 등록이 가능하다면 @Autowired 어노테이션 없이 의존성 주입이 가능합니다.
 	public final MemberRepository memberRepository;
 	
-	// 회원가입 저장
+	// 회원가입
 	@Override
 	public Member saveMember(Member member) throws Exception {
 		validateDuplicateMember(member);

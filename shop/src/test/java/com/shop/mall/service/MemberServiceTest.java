@@ -37,7 +37,9 @@ class MemberServiceTest {
 		MemberFormDto memberFormDto = new MemberFormDto();
 		memberFormDto.setEmail("test@email.com");
 		memberFormDto.setName("홍길동");
+		memberFormDto.setAddressNo("우편번호");
 		memberFormDto.setAddress("서울시 마포구 합정동");
+		memberFormDto.setAddressDetail("상세주소");
 		memberFormDto.setPassword("1234");
 		return Member.createMember(memberFormDto, passwordEncoder);
 		
@@ -54,7 +56,9 @@ class MemberServiceTest {
 		// 첫 번째 파라미터에는 기대 값, 두 번째 파라미터에는 실제로 저장된 값을 넣어줍니다.
 		assertEquals(member.getEmail(), savedMember.getEmail());
 		assertEquals(member.getName(), savedMember.getName());
+		assertEquals(member.getAddressNo(), savedMember.getAddressNo());
 		assertEquals(member.getAddress(), savedMember.getAddress());
+		assertEquals(member.getAddressDetail(), savedMember.getAddressDetail());
 		assertEquals(member.getPassword(), savedMember.getPassword());
 		assertEquals(member.getRole(), savedMember.getRole());
 	}
@@ -74,7 +78,6 @@ class MemberServiceTest {
 		
 		// 발생한 예외 메시지가 예상 결과와 맞는지 검증합니다.
 		assertEquals("이미 가입된 회원입니다.", e.getMessage());
-		
 		
 	}
 }

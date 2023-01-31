@@ -6,47 +6,110 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
-<!-- CSS only -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-	crossorigin="anonymous">
 
 <script src="https://code.jquery.com/jquery-3.6.3.min.js"
 	integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
 	crossorigin="anonymous"></script>
 
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/member/memberForm.css">
+
 </head>
 <body>
+	<div class="wrapper">
+		<form action="/members/new" method="post" id="join_form">
+			<div class="wrap">
+				<div class="subjecet">
+					<span>회원가입</span>
+				</div>
 
-	<form action="/members/new" role="form" method="post">
-		<div class="mb-3">
-			<label class="form-label">이름</label> <input
-				type="text" class="form-control" id="formGroupExampleInput"
-				placeholder="이름을 입력해주세요.">
-		</div>
-		<div class="mb-3">
-			<label class="form-label">이메일</label> <input
-				type="text" class="form-control" id="formGroupExampleInput2"
-				placeholder="이메일을 입력해주세요.">
-		</div>
-		<div class="mb-3">
-			<label class="form-label">비밀번호</label> <input
-				type="text" class="form-control" id="formGroupExampleInput"
-				placeholder="비밀번호를 입력해주세요.">
-		</div>
-		<div class="mb-3">
-			<label class="form-label">비밀번호 확인</label> <input
-				type="text" class="form-control" id="formGroupExampleInput2"
-				placeholder="비밀번호를 입력해주세요.">
-		</div>
-		<div class="mb-3">
-			<label class="form-label">주소</label> <input
-				type="text" class="form-control" id="formGroupExampleInput2"
-				placeholder="주소를 입력해주세요.">
-		</div>
-	</form>
+				<div class="mail_wrap">
+					<div class="mail_name">이메일</div>
+					<div class="mail_input_box">
+						<input class="mail_input" name="email">
+					</div>
+					<span class="final_mail_ck">이메일을 입력해주세요.</span>
+					<span class="mail_input_box_warn"></span>
+					
+					<div class="mail_check_wrap">
+					<div class="mail_check_input_box" id="mail_check_input_box_false">
+						<input class="mail_check_input" disabled="disabled">
+					</div>
+					
+					<div class="mail_check_button">
+						<span>인증번호 전송</span>
+					</div>
+					<div class="clearfix"></div>
+					<span id="mail_check_input_box_warn"></span>
+				</div>
+				</div>
+
+				<div class="pw_wrap">
+					<div class="pw_name">비밀번호</div>
+					<div class="pw_input_box">
+						<input class="pw_input" name="password">
+					</div>
+					<span class="final_pw_ck">비밀번호를 입력해주세요.</span>
+				</div>
+
+				<div class="pwck_wrap">
+					<div class="pwck_name">비밀번호 확인</div>
+					<div class="pwck_input_box">
+						<input class="pwck_input">
+					</div>
+					<span class="final_pwck_ck">비밀번호 확인을 입력해주세요.</span>
+					<span class="pwck_input_re_1">비밀번호가 일치합니다.</span>
+					<span class="pwck_input_re_2">비밀번호가 일치하지 않습니다.</span>
+				</div>
+
+				<div class="user_wrap">
+					<div class="user_name">이름</div>
+					<div class="user_input_box">
+						<input class="user_input" name="name">
+					</div>
+					<span class="final_name_ck">이름을 입력해주세요.</span>
+				</div>
+
+				<div class="address_wrap">
+					<div class="address_name">주소</div>
+					<div class="address_input_1_wrap">
+						<div class="address_input_1_box">
+							<input class="address_input_1" name="addressNo" >
+						</div>
+						<div class="address_button">
+							<span>주소 찾기</span>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+
+					<div class="address_input_2_wrap">
+						<div class="address_input_2_box">
+							<input class="address_input_2" name="address">
+						</div>
+					</div>
+
+					<div class="address_input_3_wrap">
+						<div class="address_input_3_box">
+							<input class="address_input_3" name="addressDetail">
+						</div>
+					</div>
+				</div>
+
+				<div class="join_button_wrap">
+					<input type="button" class="join_button" value="가입하기">
+				</div>
+			</div>
+		</form>
+	</div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		//회원가입 버튼(회원가입 기능 작동)
+		$(".join_button").click(function() {
+			$("#join_form").submit();
+		});
+	});
+</script>
 
 </body>
 </html>
