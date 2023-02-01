@@ -3,6 +3,7 @@ package com.shop.mall.entity;
 import java.time.LocalDateTime;
 
 import com.shop.mall.constant.ItemSellStatus;
+import com.shop.mall.dto.ItemFormDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -48,5 +49,14 @@ public class Item {
     private LocalDateTime regTime;  //등록 시간
 
     private LocalDateTime updateTime;   //수정 시간
+    
+    
+    public void updateItem(ItemFormDto itemFormDto) {
+    	this.itemNm = itemFormDto.getItemNm();
+    	this.price = itemFormDto.getPrice();
+    	this.stockNumber = itemFormDto.getStockNumber();
+    	this.itemDetail = itemFormDto.getItemDetail();
+    	this.itemSellStatus = itemFormDto.getItemSellStatus();
+    }
 
 }

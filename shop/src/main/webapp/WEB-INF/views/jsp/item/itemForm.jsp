@@ -27,7 +27,9 @@
 <form role="form" method="post" enctype="multipart/form-data">
 	<p class="h2">상품 등록</p>
 	
-	<input type="hidden" value="${id}">
+	<input type="hidden" value="${itemFormDto.id}">
+	<input type="hidden" value="${itemFormDto}">
+
 	
 	<div class="form-group">
 		<select name="itemSellStatus" class="custom-select">
@@ -40,7 +42,7 @@
 		<div class="input-group-prepend">
 			<span class="input-group-text">상품명</span>		
 		</div>
-		<input type="text" id="itemNm" name="itemNm" value="${itemNm}" class="form-control" placeholder="상품명을 입력해주세요">	
+		<input type="text" id="itemNm" name="itemNm" value="${itemFormDto.itemNm}" class="form-control" placeholder="상품명을 입력해주세요">	
 	</div>
 	<p>${errorMessage}</p>
 	
@@ -48,22 +50,23 @@
 		<div class="input-group-prepend">
 			<span class="input-group-text">가격</span>		
 		</div>
-		<input type="number" id="price" name="price" value="${price}" class="form-control" placeholder="상품의 가격을 입력해주세요">	
+		<input type="number" id="price" name="price" value="${itemFormDto.price}" class="form-control" placeholder="상품의 가격을 입력해주세요">	
 	</div>
 	
 	<div class="input-group">
 		<div class="input-group-prepend">
 			<span class="input-group-text">재고</span>		
 		</div>
-		<input type="number" id="stockNumber" name="stockNumber" value="${stockNumber}" class="form-control" placeholder="상품의 재고를 입력해주세요">	
+		<input type="number" id="stockNumber" name="stockNumber" value="${itemFormDto.stockNumber}" class="form-control" placeholder="상품의 재고를 입력해주세요">	
 	</div>
 	
 	<div class="input-group">
 		<div class="input-group-prepend">
 			<span class="input-group-text">상품 상세 내용</span>		
 		</div>
-		<textarea id="itemDetail" name="itemDetail" class="form-control" aria-label="With textarea">${itemDetail}</textarea>	
+		<textarea id="itemDetail" name="itemDetail" class="form-control" aria-label="With textarea">${itemFormDto.itemDetail}</textarea>	
 	</div>
+	
 	
 	<c:if test="${empty itemFormDto.itemImgDtoList}">
 	<div class="form-group">	
@@ -78,11 +81,11 @@
 	
 	<c:if test="${not empty itemFormDto.itemImgDtoList}">
 	<div class="form-group">	
-	<c:forEach begin="1" end="5" step="1" varStatus="status">
+	<c:forEach var="itemImgDtoList" items="${itemFormDto.itemImgDtoList}" varStatus="status">
 		<div class="custom-file img-div">
 			<input type="file" class="custom-file-input" name="itemImgFile">
-			<input type="file" class="custom-file-input" name="itemImgFile">
-			<label class="custom-file-label">${(not empty itemImgDto.oriImgName) ? itemImgDto.oriImgName :'상품이미지'}</label>
+			<input type="hidden" class="custom-file-input" name="itemImgIds" value="${itemImgDtoList.id}">
+			<label class="custom-file-label">${(not empty itemImgDtoList.oriImgName) ? itemImgDtoList.oriImgName :'상품이미지'}</label>
 		</div>
 	</c:forEach>
 	</div>

@@ -3,11 +3,13 @@ package com.shop.mall.service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.shop.mall.entity.ItemImg;
 import com.shop.mall.repository.ItemImgRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -36,7 +38,23 @@ public class ItemImgService {
 		//상품 이미지 정보 저장
 		itemImg.updateItemImg(oriImgName, imgName, imgUrl);
 		itemImgRepository.save(itemImg);
-		
+	}
+	
+	public void updateItemImg(Long itemImgId, MultipartFile itemImgFile) throws Exception{
+		if(!itemImgFile.isEmpty()) {
+			ItemImg savedItemImg = itemImgRepository.findById(itemImgId).orElseThrow(EntityNotFoundException::new);
+			
+			// 기존 이미지 파일 삭제
+			if(savedItemImg.getImgName()!="" && savedItemImg.getImgName()!=null) {
+				fileService.deleteFile(itemImgLocation+"/"+savedItemImg.getImgName());
+			}
+			
+			String oriImgName = itemImgFile.getOriginalFilename();
+			String imgName = fileService.uploadFile(itemImgLocation, oriImgName, itemImgFile.getBytes());
+			String imgUrl = "/images/item/"+imgName;
+			
+			savedItemImg.updateItemImg(oriImgName, imgName, imgUrl);
+		}
 	}
 	
 }
