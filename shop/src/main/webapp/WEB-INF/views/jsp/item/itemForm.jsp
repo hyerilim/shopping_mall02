@@ -8,16 +8,15 @@
 <title>상품등록</title>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
 
 <style>
-	.input-group {
+.input-group{
 		margin-bottom : 15px
 	}
-	.img-div {
+.img-div {
 		margin-bottom : 10px
 	}
-	.fieldError {
+.fieldError {
 		color:#bd2130;
 	}
 </style>
@@ -31,9 +30,9 @@
 	<input type="hidden" value="${id}">
 	
 	<div class="form-group">
-		<select>
-			<option value="SELL">판매중</option>
-			<option value="SOLD_OUT">품절</option>
+		<select name="itemSellStatus" class="custom-select">
+			<option ${(itemSellStatus=="SELL")?"selected":""} value="SELL">판매중</option>
+			<option ${(itemSellStatus=="SOLD_OUT")?"selected":""} value="SOLD_OUT">품절</option>
 		</select>
 	</div>
 	
@@ -43,7 +42,7 @@
 		</div>
 		<input type="text" id="itemNm" name="itemNm" value="${itemNm}" class="form-control" placeholder="상품명을 입력해주세요">	
 	</div>
-	<p>error</p>
+	<p>${errorMessage}</p>
 	
 	<div class="input-group">
 		<div class="input-group-prepend">
@@ -66,14 +65,45 @@
 		<textarea id="itemDetail" name="itemDetail" class="form-control" aria-label="With textarea">${itemDetail}</textarea>	
 	</div>
 	
-	<a href="/admin/item/new" type="submit" class="btn btn-primary">저장</a>
+	<c:if test="${empty itemFormDto.itemImgDtoList}">
+	<div class="form-group">	
+	<c:forEach begin="1" end="5" step="1" varStatus="status">
+		<div class="custom-file img-div">
+			<input type="file" class="custom-file-input" name="itemImgFile">
+			<label class="custom-file-label">상품이미지</label>
+		</div>
+	</c:forEach>
+	</div>
+	</c:if>
 	
+	<c:if test="${not empty itemFormDto.itemImgDtoList}">
+	<div class="form-group">	
+	<c:forEach begin="1" end="5" step="1" varStatus="status">
+		<div class="custom-file img-div">
+			<input type="file" class="custom-file-input" name="itemImgFile">
+			<input type="file" class="custom-file-input" name="itemImgFile">
+			<label class="custom-file-label">${(not empty itemImgDto.oriImgName) ? itemImgDto.oriImgName :'상품이미지'}</label>
+		</div>
+	</c:forEach>
+	</div>
+	</c:if>
+	
+	
+	<c:if test="${empty itemImgDto.id}">
+		<input type="submit" value="저장" class="btn btn-primary">
+	</c:if>
+	<c:if test="${not empty itemImgDto.id}">
+		<input type="submit" value="수정" class="btn btn-primary">
+	</c:if>	
+
+
 </form>
 
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/bootstrap.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.3.js"></script>
+
 <script type="text/javascript">
-	
 	$(document).ready(function(){
 		var errorMessage = [[${errorMessage}]];
 		if(errorMessage != null){
@@ -98,7 +128,6 @@
 			$(this).siblings(".custom-file-label").html(fileName);
 		});
 	}
-	
 </script>
 </body>
 </html>

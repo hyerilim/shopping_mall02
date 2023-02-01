@@ -35,6 +35,7 @@ public class ItemController {
 							, @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList) {
 		
 		if(bindingResult.hasErrors()) {
+			model.addAttribute("errorMessage", "error");
 			return "jsp/item/itemForm";
 		}
 		
@@ -49,6 +50,8 @@ public class ItemController {
 			model.addAttribute("errorMessage", "상품 등록 중 에러가 발생하였습니다.");
 		}
 		
-		return "redirect:/";
+		return "redirect:/index";
 	}
+	
+
 }

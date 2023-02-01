@@ -18,6 +18,8 @@ public class SecurityConfig2 {
 		
 		http.authorizeHttpRequests().requestMatchers(
 				new AntPathRequestMatcher("/**")).permitAll();
+		
+		http.csrf().disable();
 
 		return http.build();
 	}
