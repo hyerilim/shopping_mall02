@@ -9,6 +9,8 @@ import lombok.ToString;
 @ToString
 public class MemberFormDto {
 
+	private String loginId; // 로그인 아이디
+	
 	private String name; // 이름
 	
 	private String email; // 이메일

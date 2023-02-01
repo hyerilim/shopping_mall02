@@ -53,6 +53,10 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springframework/spring-context-support
 	implementation 'org.springframework:spring-context-support:6.0.3'
 
+	// SMTP 설정 추가
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
+	implementation 'org.springframework.boot:spring-boot-starter-mail:3.0.2'
+
 }
 
 tasks.named('test') {

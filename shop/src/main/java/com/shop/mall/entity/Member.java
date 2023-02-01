@@ -26,10 +26,12 @@ public class Member {
 	
 	@Id
     @Column(name="member_id")
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+	private String loginId;
+    
+	private String name;
 
     // 회원은 이메일을 통해 유일하게 구분, unique = true
     @Column(unique = true)
@@ -52,6 +54,7 @@ public class Member {
     // Member 엔티티에 회원을 생성하는 메소드를 만들어서 관리를 한다면 코드가 변경되더라도 한 군데만 수정하면 되는 이점이 있습니다.
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
     	Member member = new Member();
+    	member.setLoginId(memberFormDto.getLoginId());
     	member.setName(memberFormDto.getName());
     	member.setEmail(memberFormDto.getEmail());
     	member.setAddressNo(memberFormDto.getAddressNo());

@@ -40,6 +40,18 @@ public class MemberServiceImpl implements MemberService {
 		}
 		
 	}
+	
+	// 로그인 아이디 중복체크
+	@Override
+	public String idCheck(String loginId) throws Exception {
+		Member member = memberRepository.findByLoginId(loginId);
+		if(member != null) {
+			return member.getLoginId();
+		}
+		
+		return null;
+	};
+	
 
 	// 이메일 중복체크
 	@Override
@@ -50,6 +62,6 @@ public class MemberServiceImpl implements MemberService {
 		}
 		
 		return null;
-	};
-	
+	}
+
 }
