@@ -56,6 +56,11 @@ dependencies {
 	// SMTP 설정 추가
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
 	implementation 'org.springframework.boot:spring-boot-starter-mail:3.0.2'
+	
+	// 서버로 넘어가는 값 검증하기 위해서 필요
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation:3.0.2'
+	
 
 }
 

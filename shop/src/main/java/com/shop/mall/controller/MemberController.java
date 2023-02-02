@@ -144,7 +144,8 @@ public class MemberController {
 		logger.info("인증번호 " + checkNum);
 
 		/* 이메일 보내기 */
-		// root-context.xml에 삽입한 자신의 이메일 계정의 이메일 주소입니다. (아이디만 입력하는 것이 아니라 이메일 주소를 입력해야 합니다.)
+		// root-context.xml에 삽입한 자신의 이메일 계정의 이메일 주소입니다. (아이디만 입력하는 것이 아니라 이메일 주소를 입력해야
+		// 합니다.)
 		String setFrom = "dbxowhdsla12@naver.com";
 
 		// 수신받을 이메일입니다. 뷰로부터 받은 이메일 주소인 변수 email을 사용하였습니다.
@@ -167,16 +168,16 @@ public class MemberController {
 			MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
 
 			// 단순한 텍스트 메세지만 사용시엔 아래의 코드도 사용 가능
-			//MimeMessageHelper mailHelper = new MimeMessageHelper(mail, "UTF-8");
+			// MimeMessageHelper mailHelper = new MimeMessageHelper(mail, "UTF-8");
 
 			// 빈에 아이디 설정한 것은 단순히 smtp 인증을 받기 위해 사용 따라서 보내는이(setFrom())반드시 필요
-			// 보내는이와 메일주소를 수신하는이가 볼때 모두 표기 되게 원하신다면 아래의 코드를 사용하시면 됩니다. 
+			// 보내는이와 메일주소를 수신하는이가 볼때 모두 표기 되게 원하신다면 아래의 코드를 사용하시면 됩니다.
 			// helper.setFrom("보내는이 이름 <보내는이 아이디@도메인주소>");
 			helper.setFrom(setFrom);
 			helper.setTo(toMail);
 			helper.setSubject(title);
 
-			// true는 html을 사용하겠다는 의미입니다. 
+			// true는 html을 사용하겠다는 의미입니다.
 			// html을 사용하게되면 이미지를 첨부 할 수 있는 <img>태그를 사용 할 수있습니다.
 			helper.setText(content, true);
 
@@ -202,6 +203,17 @@ public class MemberController {
 
 		logger.info("로그인 페이지 이동");
 
+		return "jsp/member/login";
+	}
+
+	// 로그인 에러 페이지 이동
+	@GetMapping(value = "/login/error")
+	public String loginError(Model model) {
+
+		logger.info("로그인 에러 페이지 이동");
+		
+		model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요.");
+		
 		return "jsp/member/login";
 	}
 }

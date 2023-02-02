@@ -5,6 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta id="_csrf" name="_csrf" content="${_csrf.token}">
+<meta id="_csrf_header" name="_csrf_header"
+	content="${_csrf.headerName}">
+
 <title>회원가입</title>
 
 <script src="https://code.jquery.com/jquery-3.6.3.min.js"
@@ -18,6 +22,8 @@
 <body>
 	<div class="wrapper">
 		<form action="/members/new" method="post" id="join_form">
+			<input type="hidden" name="${_csrf.parameterName}"
+				value="${_csrf.token}" />
 			<div class="wrap">
 				<div class="subjecet">
 					<span>회원가입</span>
@@ -26,7 +32,8 @@
 				<div class="id_wrap">
 					<div class="id_name">아이디</div>
 					<div class="id_input_box">
-						<input class="id_input" name="loginId" onkeydown="if(event.keyCode === 32 ){event.returnValue=false;}">
+						<input class="id_input" name="loginId"
+							onkeydown="if(event.keyCode === 32 ){event.returnValue=false;}">
 					</div>
 					<span class="id_input_re_1">사용 가능한 아이디입니다.</span> <span
 						class="id_input_re_2">아이디가 이미 존재합니다.</span>
@@ -39,7 +46,8 @@
 				<div class="pw_wrap">
 					<div class="pw_name">비밀번호</div>
 					<div class="pw_input_box">
-						<input type="password" class="pw_input" name="password" onkeydown="if(event.keyCode === 32 ){event.returnValue=false;}">
+						<input type="password" class="pw_input" name="password"
+							onkeydown="if(event.keyCode === 32 ){event.returnValue=false;}">
 					</div>
 					<span class="final_pw_ck">비밀번호를 입력해주세요.</span> <span
 						class="pw_input_box_warn"></span>
@@ -48,7 +56,8 @@
 				<div class="pwck_wrap">
 					<div class="pwck_name">비밀번호 확인</div>
 					<div class="pwck_input_box">
-						<input type="password" class="pwck_input" onkeydown="if(event.keyCode === 32 ){event.returnValue=false;}">
+						<input type="password" class="pwck_input"
+							onkeydown="if(event.keyCode === 32 ){event.returnValue=false;}">
 					</div>
 					<span class="final_pwck_ck">비밀번호 확인을 입력해주세요.</span> <span
 						class="pwck_input_re_1">비밀번호가 일치합니다.</span> <span
@@ -59,7 +68,8 @@
 				<div class="user_wrap">
 					<div class="user_name">이름</div>
 					<div class="user_input_box">
-						<input class="user_input" name="name" onkeydown="if(event.keyCode === 32 ){event.returnValue=false;}">
+						<input class="user_input" name="name"
+							onkeydown="if(event.keyCode === 32 ){event.returnValue=false;}">
 					</div>
 					<span class="final_name_ck">이름을 입력해주세요.</span>
 				</div>
@@ -67,7 +77,8 @@
 				<div class="mail_wrap">
 					<div class="mail_name">이메일</div>
 					<div class="mail_input_box">
-						<input class="mail_input" name="email" onkeydown="if(event.keyCode === 32 ){event.returnValue=false;}">
+						<input class="mail_input" name="email"
+							onkeydown="if(event.keyCode === 32 ){event.returnValue=false;}">
 					</div>
 					<span class="email_input_re_1">사용 가능한 이메일입니다.</span> <span
 						class="email_input_re_2">이메일이 이미 존재합니다.</span> <span
@@ -109,7 +120,8 @@
 
 					<div class="address_input_3_wrap">
 						<div class="address_input_3_box">
-							<input class="address_input_3" name="addressDetail" readonly onkeydown="if(event.keyCode === 32 ){event.returnValue=false;}">
+							<input class="address_input_3" name="addressDetail" readonly
+								onkeydown="if(event.keyCode === 32 ){event.returnValue=false;}">
 						</div>
 					</div>
 					<span class="final_addr_ck">주소를 입력해주세요.</span>
@@ -156,12 +168,16 @@
 										/* 입력값 변수 */
 										var id = $('.id_input').val().trim(); // id 입력란
 										var pw = $('.pw_input').val().trim(); // 비밀번호 입력란
-										var pwck = $('.pwck_input').val().trim(); // 비밀번호 확인 입력란
-										var name = $('.user_input').val().trim(); // 이름 입력란
-										var mail = $('.mail_input').val().trim(); // 이메일 입력란
+										var pwck = $('.pwck_input').val()
+												.trim(); // 비밀번호 확인 입력란
+										var name = $('.user_input').val()
+												.trim(); // 이름 입력란
+										var mail = $('.mail_input').val()
+												.trim(); // 이메일 입력란
 										var mailck = $('.mail_check_input')
 												.val().trim(); // 이메일 인증번호 입력란										
-										var addr = $('.address_input_3').val().trim(); // 상세주소 입력란
+										var addr = $('.address_input_3').val()
+												.trim(); // 상세주소 입력란
 
 										/* 아이디 유효성검사 */
 										// id 입력란에 아무것도 입력이 되지 않았을 때 span 태그가 보이고 idCheck = false;
@@ -187,7 +203,7 @@
 											$('.final_pw_ck').css('display',
 													'none');
 											pwCheck = true;
-										}			
+										}
 
 										/* 비밀번호 확인 유효성 검사 */
 										if (pwck == "") {
@@ -257,7 +273,8 @@
 												&& pwckCheck && pwckcorCheck
 												&& nameCheck && mailCheck
 												&& mailnumCheck && addressCheck
-												&& mailckCheck && mailnumcorCheck) {
+												&& mailckCheck
+												&& mailnumcorCheck) {
 
 											$("#join_form").submit();
 										}
@@ -302,10 +319,18 @@
 								loginId : loginId
 							} // '컨트롤에 넘길 데이터 이름' : '데이터(.id_input에 입력되는 값)'
 
+							var token = $("meta[name='_csrf']").attr("content");
+							var header = $("meta[name='_csrf_header']").attr(
+									"content");
+
 							$.ajax({
 								type : "post",
 								url : "/members/memberIdChk",
 								data : data,
+								/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+								beforeSend : function(xhr) {
+									xhr.setRequestHeader(header, token);
+								},
 								success : function(result) {
 									// console.log("성공 여부" + result);
 									$('.final_id_ck').css("display", "none");
@@ -351,10 +376,18 @@
 						email : email
 					} // '컨트롤에 넘길 데이터 이름' : '데이터(.mail_input에 입력되는 값)'
 
+					var token = $("meta[name='_csrf']").attr("content");
+					var header = $("meta[name='_csrf_header']").attr(
+							"content");
+					
 					$.ajax({
 						type : "post",
 						url : "/members/emailChk",
 						data : data,
+						/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+						beforeSend : function(xhr) {
+							xhr.setRequestHeader(header, token);
+						},
 						success : function(result) {
 							// console.log("성공 여부" + result);
 
@@ -414,9 +447,17 @@
 				return false;
 			}
 
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr(
+					"content");
+			
 			$.ajax({
 				type : "GET",
 				url : "/members/mailCheck?email=" + email,
+				/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+				beforeSend : function(xhr) {
+					xhr.setRequestHeader(header, token);
+				},
 				success : function(data) {
 					// console.log("data : " + data);
 
@@ -444,7 +485,7 @@
 					var checkResult = $("#mail_check_input_box_warn"); // 비교 결과
 
 					// $(".final_mail_num_ck").css("display","none");
-					
+
 					if (inputCode == code) { // 일치할 경우
 						checkResult.html("인증번호가 일치합니다.");
 						checkResult.attr("class", "correct");
@@ -453,7 +494,7 @@
 					} else { // 일치하지 않을 경우
 						checkResult.html("인증번호를 다시 확인해주세요.");
 						checkResult.attr("class", "incorrect");
-						
+
 						mailnumcorCheck = false; // 일치하지 않을 경우
 					}
 				});
@@ -572,36 +613,35 @@
 
 				});
 
-		$('.pw_input').on("propertychange change keyup paste",
-				function() {
-			
-					var pw = $('.pw_input').val().trim();
-					// var pwck = $('.pwck_input').val().trim();
-					$('.final_pw_ck').css('display', 'none'); // 비밀번호를 입력해주세요.
+		$('.pw_input').on("propertychange change keyup paste", function() {
 
-					// 비밀번호 입력시 비밀번호 형식 검사를 진행
-					var warnMsg = $(".pw_input_box_warn"); // 비밀번호 입력 경고글
+			var pw = $('.pw_input').val().trim();
+			// var pwck = $('.pwck_input').val().trim();
+			$('.final_pw_ck').css('display', 'none'); // 비밀번호를 입력해주세요.
 
-					// 입력값을 지우고 빈칸이 되었을 때 입력해주세요 문구로 바꾸기
-					if (pw == "") {
-						$('.final_pw_ck').css('display', 'inline-block');
-						warnMsg.css("display", "none");
-						return false;
-					}
+			// 비밀번호 입력시 비밀번호 형식 검사를 진행
+			var warnMsg = $(".pw_input_box_warn"); // 비밀번호 입력 경고글
 
-					if (passwordFormCheck(pw)) {
-						warnMsg.html("비밀번호 확인을 입력해주세요.");
-						warnMsg.css("display", "inline-block");
-						warnMsg.css("color", "green");
-						return false;
-					} else {
-						warnMsg.html("영문, 숫자, 특수문자 혼합하여 8~20자리를 입력해주세요.");
-						warnMsg.css("display", "inline-block");
-						warnMsg.css("color", "red");
-						return false;
-					}
+			// 입력값을 지우고 빈칸이 되었을 때 입력해주세요 문구로 바꾸기
+			if (pw == "") {
+				$('.final_pw_ck').css('display', 'inline-block');
+				warnMsg.css("display", "none");
+				return false;
+			}
 
-				});
+			if (passwordFormCheck(pw)) {
+				warnMsg.html("비밀번호 확인을 입력해주세요.");
+				warnMsg.css("display", "inline-block");
+				warnMsg.css("color", "green");
+				return false;
+			} else {
+				warnMsg.html("영문, 숫자, 특수문자 혼합하여 8~20자리를 입력해주세요.");
+				warnMsg.css("display", "inline-block");
+				warnMsg.css("color", "red");
+				return false;
+			}
+
+		});
 
 		/* 입력 이메일 형식 유효성 검사 */
 		function mailFormCheck(email) {
