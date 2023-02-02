@@ -18,7 +18,7 @@ import lombok.Setter;
 @Table(name="orders")
 @Getter
 @Setter
-public class Order {
+public class Order extends BaseEntity{
 	
 	@Id
     @Column(name="order_id")
@@ -36,8 +36,5 @@ public class Order {
     @OneToMany(mappedBy="order")
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    private LocalDateTime regTime;
-
-    private LocalDateTime updateTime;
 
 }

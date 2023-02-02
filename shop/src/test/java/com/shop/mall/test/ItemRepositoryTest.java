@@ -1,6 +1,7 @@
 package com.shop.mall.test;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,4 +33,14 @@ public class ItemRepositoryTest {
 		System.out.println(savedItem.toString());
 	}
 
+	@Test
+	@DisplayName("상품명, 상품상세설명 or 테스트")
+	public void findByItemNmOrItemDetailTest() {
+		this.createItemTest();
+		List<Item> itemList = itemRepository.findByItemNmOrItemDetail("테스트 상품1", "테스트 상품 상세 설명5");
+		for(Item item : itemList) {
+			System.out.println(item.toString());
+		}
+			
+	}
 }

@@ -18,7 +18,7 @@ import lombok.Setter;
 @Table(name="item_img")
 @Getter
 @Setter
-public class ItemImg{
+public class ItemImg extends BaseEntity{
 	@Id
     @Column(name="item_img_id")
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -36,9 +36,6 @@ public class ItemImg{
     @JoinColumn(name="item_id")
     private Item item;
     
-    private LocalDateTime regTime;  //등록 시간
-
-    private LocalDateTime updateTime;   //수정 시간
     
     public void updateItemImg(String oriImgName, String imgName, String imgUrl) {
     	this.oriImgName = oriImgName;
