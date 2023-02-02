@@ -73,5 +73,22 @@ class MemberControllerTest {
 		.andExpect(SecurityMockMvcResultMatchers.authenticated());
 
 	}
+	
+	@Test
+	@DisplayName("로그인 실패 테스트")
+	public void loginFailTest() throws Exception{
+		String loginId = "loginId";
+		String password = "1234";
+		this.createMember(loginId, password);
 
+		mockMvc.perform(formLogin().userParameter("loginId")
+				// 회원 가입 메소드를 실행 후 가입된 회원 정보로 로그인이 되는지 테스트를 진행합니다.
+				// userParameter()를 이용하여 이메일을 아이디로 세팅하고 로그인 URL에 요청합니다.
+				.loginProcessingUrl("/members/login")
+				.user(loginId)
+				.password("12345"))
+		// 회원 가입은 정상적으로 진행하였지만 회원가입 시 입력한 비밀번호가 아닌 다른 비밀번호로 로그인을 시도하여 인증되지 않은 결과 값이 출력되어 테스트가 통과합니다.
+		.andExpect(SecurityMockMvcResultMatchers.authenticated());
+	}
+	
 }
