@@ -297,7 +297,7 @@
 	display: none;
 }
 
-/* 추후 이메일 전송이 완료되었을 때 회색 */
+/* 추후 이메일 전송이 완료되기 전 회색 */
 #mail_check_input_box_false {
 	background-color: #ebebe4;
 }
@@ -315,4 +315,70 @@
 /* 이메일 인증번호 불일치 */
 .incorrect {
 	color: red;
+}
+
+/* 아이디 유효성 검사 문구 */
+.final_id_ck {
+	color: red;
+	display: none;
+}
+
+/* 비밀번호 유효성 검사 문구 */
+.final_pw_ck {
+	color: red;
+	display: none;
+}
+
+/* 비밀번호확인 유효성 검사 문구 */
+.final_pwck_ck {
+	color: red;
+	display: none;
+}
+
+/* 이름 유효성 검사 문구 */
+.final_name_ck {
+	color: red;
+	display: none;
+}
+
+/* 이메일 유효성 검사 문구 */
+.final_mail_ck {
+	color: red;
+	display: none;
+}
+
+/* 주소 유효성 검사 문구 */
+.final_addr_ck {
+	color: red;
+	display: none;
+}
+
+/* 비밀번호 확인 일치 유효성검사 */
+.pwck_input_re_1 {
+	color: green;
+	display: none;
+}
+
+/* 비밀번호 확인 불일치  */
+.pwck_input_re_2 {
+	color: red;
+	display: none;
+}
+
+/* 비밀번호 8자이상 불일치  */
+.pw_input_re_3 {
+	color: red;
+	display: none;
+}
+
+/* 비밀번호 확인 8자이상 불일치  */
+.pwck_input_re_3 {
+	color: red;
+	display: none;
+}
+
+/* 이메일 인증번호 유효성 검사 문구 */
+.final_mail_num_ck{
+	color: red;
+	display: none;
 }

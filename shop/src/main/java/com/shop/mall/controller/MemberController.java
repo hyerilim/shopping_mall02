@@ -110,7 +110,7 @@ public class MemberController {
 	@ResponseBody
 	public String emailChkPOST(String email) throws Exception {
 
-		// logger.info("memberEmailChk() 진입");
+		logger.info("memberEmailChk() 진입");
 
 		String result = memberService.emailCheck(email);
 
