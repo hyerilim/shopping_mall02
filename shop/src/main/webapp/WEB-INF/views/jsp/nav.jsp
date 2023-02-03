@@ -35,39 +35,34 @@
 					<!-- 로그인 안 한 익명일 경우 -->
 					<!-- isAnonymous() : 익명 사용자이면 true(로그인 안한 사용자도 익명으로 간주) -->
 					<sec:authorize access="isAnonymous()">
-						<li class="nav-item">
-							<a class="nav-link" href="/members/new">회원가입</a>
+						<li class="nav-item"><a class="nav-link" href="/members/new">회원가입</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/members/login">로그인</a>
-						</li>
+						<li class="nav-item"><a class="nav-link"
+							href="/members/login">로그인</a></li>
+					</sec:authorize>
+
+					<!-- 유저 -->
+					<sec:authorize access="hasAnyAuthority('ROLE_USER')">
+						<li class="nav-item"><a class="nav-link" href="#">상품목록</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">장바구니</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">구매이력</a></li>	
+					</sec:authorize>
+					
+					<!-- 관리자 -->
+					<sec:authorize access="hasAnyAuthority('ROLE_ADMIN')">
+						<li class="nav-item"><a class="nav-link" href="#">상품등록</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">상품관리</a></li>
 					</sec:authorize>
 
 					<!-- 로그인(인증된) 사용자인 경우 -->
 					<!-- isAuthenticated() : 인증된 사용자면 true -->
 					<sec:authorize access="isAuthenticated()">
-						<li class="nav-item">
-							<a class="nav-link" href="#">장바구니</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">구매이력</a>
-						</li>
-						<sec:authorize access="hasAnyAuthority('ROLE_ADMIN')">
-							<li class="nav-item">
-								<a class="nav-link" href="#">상품등록</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="#">상품관리</a>
-							</li>
-						</sec:authorize>
-							<li class="nav-item">
-								<a class="nav-link" href="/admin/test/new">테스트등록</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="/members/logout">로그아웃</a>
-							</li>
+						<li class="nav-item"><a class="nav-link"
+							href="/admin/test/new">테스트등록</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="/members/logout">로그아웃</a></li>
 					</sec:authorize>
-					
+
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
 						href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>

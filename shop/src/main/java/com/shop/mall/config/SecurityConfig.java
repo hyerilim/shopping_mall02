@@ -92,6 +92,7 @@ public class SecurityConfig {
 
 	}
 
+	// 999 에러 뜨길래 추가
 	// error 보안 구성에서 페이지 무시
 	@Bean
 	public WebSecurityCustomizer configure() {

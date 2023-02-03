@@ -8,6 +8,8 @@ public class MainController {
 
 	@GetMapping("/")
 	public String mainPage() {
+		
 		return "jsp/main/home";
 	}
+	
 }

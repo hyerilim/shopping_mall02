@@ -9,7 +9,21 @@
 <head>
 <meta charset="UTF-8">
 <title>메인페이지</title>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		<!-- 관리자 -->
+		<sec:authorize access="hasAnyAuthority('ROLE_ADMIN')">
+			location.href="/admin/home";
+		</sec:authorize>
+		
+	});
+</script>
+
 </head>
+
 <body>
 	<jsp:include page="../nav.jsp"></jsp:include>
 	<h2>메인페이지</h2>
