@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -20,6 +21,10 @@ public class SecurityConfig {
 	@Autowired
 	MemberService memberService;
 
+	// 
+	@Autowired
+	UserDetailsService userDetailsService;
+	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.formLogin()
@@ -56,6 +61,26 @@ public class SecurityConfig {
 		// 인증되지 않은 사용자가 리소스에 접근하였을 때 수행되는 핸들러를 등록합니다.
 		http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
 
+		// Remember Me 인증
+		// JSESSIONID이 만료되거나 쿠키가 없을 지라도 어플리케이션이 사용자를 기억하는 기능이다.
+		// 자동 로그인 기능을 떠올리면 쉽다.
+		// Remember-Me 토큰 쿠키를 이용한다.
+		// 서버는 이 토큰의 유효성을 검사하고, 검증되면 사용자는 로그인된다.
+		// rememberMe 기능 작동함
+		http.rememberMe()
+		
+			// default: remember-me, checkbox 등의 이름과 맞춰야 함.
+			.rememberMeParameter("remember")
+			
+			// 쿠키의 만료시간 설정(초), default: 14일
+			.tokenValiditySeconds(3600)
+			
+			// 사용자가 체크박스를 활성화하지 않아도 항상 실행, default: false
+			.alwaysRemember(false)
+			
+			// 기능을 사용할 때 사용자 정보가 필요함. 반드시 이 설정 필요함.
+			.userDetailsService(userDetailsService);
+		
 		// http.csrf().disable();
 		return http.build();
 	}

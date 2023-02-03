@@ -30,6 +30,7 @@
             <input type="password" class="form-control" name="password" id="password" placeholder="Password">
             <label for="pwd">비밀번호</label>
          </div>
+         <p><input type="checkbox" class="form-check-input" name="remember">로그인 유지</p>
          
          <!-- <div class="checkbox mb-3">
             <label>
