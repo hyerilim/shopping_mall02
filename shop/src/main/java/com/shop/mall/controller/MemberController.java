@@ -60,7 +60,7 @@ public class MemberController {
 	public String memberForm(@Validated MemberFormDto memberFormDto, BindingResult bindingResult, Model model)
 			throws Exception {
 
-		logger.info("회원가입");
+		logger.info("회원가입 :"+ memberFormDto);
 
 		// bindingResult.hasErrors() 를 호출하여 에러가 있다면 회원 가입페이지로 이동합니다.
 		if (bindingResult.hasErrors()) {
@@ -144,18 +144,17 @@ public class MemberController {
 		logger.info("인증번호 " + checkNum);
 
 		/* 이메일 보내기 */
-		// root-context.xml에 삽입한 자신의 이메일 계정의 이메일 주소입니다. (아이디만 입력하는 것이 아니라 이메일 주소를 입력해야
-		// 합니다.)
+		// application.properties에 삽입한 자신의 이메일 계정의 이메일 주소입니다. (아이디만 입력하는 것이 아니라 이메일 주소를 입력해야 합니다.)
 		String setFrom = "dbxowhdsla12@naver.com";
 
 		// 수신받을 이메일입니다. 뷰로부터 받은 이메일 주소인 변수 email을 사용하였습니다.
 		String toMail = email;
 
 		// 자신이 보낼 이메일 제목을 작성합니다.
-		String title = "회원가입 인증 이메일 입니다.";
+		String title = "할 수 있다 회원가입 인증 이메일 입니다.";
 
 		// 자신이 보낼 이메일 내용입니다.
-		String content = "홈페이지를 방문해주셔서 감사합니다." + "<br><br>" + "인증 번호는 " + checkNum + "입니다." + "<br>"
+		String content = "할 수 있다에 방문해주셔서 감사합니다." + "<br><br>" + "인증 번호는 " + checkNum + "입니다." + "<br>"
 				+ "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
 
 		// 이메일 전송을 위한 코드 삽입
@@ -181,7 +180,8 @@ public class MemberController {
 			// html을 사용하게되면 이미지를 첨부 할 수 있는 <img>태그를 사용 할 수있습니다.
 			helper.setText(content, true);
 
-			// 단순한 텍스트만 사용하신다면 다음의 코드를 사용하셔도 됩니다. // helper.setText(content);
+			// 단순한 텍스트만 사용하신다면 다음의 코드를 사용하셔도 됩니다. 
+			// helper.setText(content);
 
 			mailSender.send(message);
 

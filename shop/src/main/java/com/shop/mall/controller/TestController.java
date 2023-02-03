@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class TestController {
 	
-	@GetMapping("/index")
-	public String HelloWorld() {
-		return "jsp/index";
+	@GetMapping(value="/admin/test/new")
+	public String testForm() {
+		return "jsp/test/testForm";
 	}
 }

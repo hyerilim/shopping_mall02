@@ -41,7 +41,7 @@
          </c:if>
          
          <p>
-	         <button class="w-100 btn btn-lg btn-primary">로그인</button>
+	         <button type="submit" class="w-100 btn btn-lg btn-primary">로그인</button>
          </p>
 	         <button type="button" class="w-100 btn btn-lg btn-primary" onClick="location.href='/members/new'">회원가입</button>
          

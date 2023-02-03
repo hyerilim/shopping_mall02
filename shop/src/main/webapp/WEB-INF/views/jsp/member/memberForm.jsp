@@ -358,64 +358,69 @@
 						}); // function 종료
 
 		// 이메일 중복검사
-		$('.mail_input').on(
-				"propertychange change keyup paste input",
-				function() {
+		$('.mail_input')
+				.on(
+						"propertychange change keyup paste input",
+						function() {
 
-					/* console.log("keyup 테스트");	 */
+							/* console.log("keyup 테스트");	 */
 
-					var email = $('.mail_input').val().trim(); // .mail_input에 입력되는 값
+							var email = $('.mail_input').val().trim(); // .mail_input에 입력되는 값
 
-					if (email == "" || email == null || email.length < 1) {
-						$('.final_mail_ck').css("display", "inline-block");
-						$('.email_input_re_1').css("display", "none");
-						return false;
-					}
-
-					var data = {
-						email : email
-					} // '컨트롤에 넘길 데이터 이름' : '데이터(.mail_input에 입력되는 값)'
-
-					var token = $("meta[name='_csrf']").attr("content");
-					var header = $("meta[name='_csrf_header']").attr(
-							"content");
-					
-					$.ajax({
-						type : "post",
-						url : "/members/emailChk",
-						data : data,
-						/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
-						beforeSend : function(xhr) {
-							xhr.setRequestHeader(header, token);
-						},
-						success : function(result) {
-							// console.log("성공 여부" + result);
-
-							$('.final_mail_ck').css("display", "none");
-
-							if (result != 'fail') {
-								$('.mail_input_box_warn')
-										.css("display", "none");
-								$('.email_input_re_1').css("display",
-										"inline-block");
-								$('.email_input_re_2').css("display", "none");
-
-								// 이메일 중복이 없는 경우
-								mailckCheck = true;
-							} else {
-								$('.mail_input_box_warn')
-										.css("display", "none");
-								$('.email_input_re_2').css("display",
+							if (email == "" || email == null
+									|| email.length < 1) {
+								$('.final_mail_ck').css("display",
 										"inline-block");
 								$('.email_input_re_1').css("display", "none");
-
-								// 이메일 중복이 있는 경우
-								mailckCheck = false;
+								return false;
 							}
-						} // success 종료
-					}); // ajax 종료	
 
-				}); // function 종료
+							var data = {
+								email : email
+							} // '컨트롤에 넘길 데이터 이름' : '데이터(.mail_input에 입력되는 값)'
+
+							var token = $("meta[name='_csrf']").attr("content");
+							var header = $("meta[name='_csrf_header']").attr(
+									"content");
+
+							$.ajax({
+								type : "post",
+								url : "/members/emailChk",
+								data : data,
+								/*데이터를 전송하기 전에 헤더에 csrf값을 설정한다*/
+								beforeSend : function(xhr) {
+									xhr.setRequestHeader(header, token);
+								},
+								success : function(result) {
+									// console.log("성공 여부" + result);
+
+									$('.final_mail_ck').css("display", "none");
+
+									if (result != 'fail') {
+										$('.mail_input_box_warn').css(
+												"display", "none");
+										$('.email_input_re_1').css("display",
+												"inline-block");
+										$('.email_input_re_2').css("display",
+												"none");
+
+										// 이메일 중복이 없는 경우
+										mailckCheck = true;
+									} else {
+										$('.mail_input_box_warn').css(
+												"display", "none");
+										$('.email_input_re_2').css("display",
+												"inline-block");
+										$('.email_input_re_1').css("display",
+												"none");
+
+										// 이메일 중복이 있는 경우
+										mailckCheck = false;
+									}
+								} // success 종료
+							}); // ajax 종료	
+
+						}); // function 종료
 
 		/* 인증번호 이메일 전송 */
 		$(".mail_check_button").click(function() {
@@ -427,17 +432,34 @@
 			// 이메일을 작성하고 인증번호 전송 버튼을 눌렀을 때 이메일 형식 검사를 진행
 			var warnMsg = $(".mail_input_box_warn"); // 이메일 입력 경고글
 
-			var emailCheck1 = $(".email_input_re_1");
-			var emailCheck2 = $(".email_input_re_2");
+			var emailCheck1 = $(".email_input_re_1"); // 사용 가능한 이메일 메시지
+			var emailCheck2 = $(".email_input_re_2"); // 중복 이메일 메시지
 
 			/* 이메일 형식 유효성 검사 */
 			// mailFormCheck(이메일 형식 검사) 메서드 활용
 			if (mailFormCheck(email)) {
+				
+				// 중복 이메일은 인증번호 발송 안됨
+				if (mailckCheck == false) {
+					$('.mail_input_box_warn').css("display", "none");
+					$('.email_input_re_2').css("display", "inline-block");
+					$('.email_input_re_1').css("display", "none");
+					
+					// 인증번호 입력란 변환 기능
+					cehckBox.attr("disabled", true);
+
+					// 이메일 인증 입력란 색상 변경 위해서 id 속성 값을 변경
+					boxWrap.attr("id", "mail_check_input_box_false");
+					
+					return false;
+				}
+				
 				emailCheck1.css("display", "none");
 				emailCheck2.css("display", "none");
 				warnMsg.html("이메일이 전송 되었습니다. 이메일을 확인해주세요.");
 				warnMsg.css("display", "inline-block");
 				warnMsg.css("color", "green");
+				
 			} else {
 				emailCheck1.css("display", "none");
 				emailCheck2.css("display", "none");
@@ -447,10 +469,10 @@
 				return false;
 			}
 
+			// ajax csrf 토큰
 			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr(
-					"content");
-			
+			var header = $("meta[name='_csrf_header']").attr("content");
+
 			$.ajax({
 				type : "GET",
 				url : "/members/mailCheck?email=" + email,
@@ -613,7 +635,7 @@
 
 				});
 
-		$('.pw_input').on("propertychange change keyup paste", function() {
+		$('.pw_input').on("propertychange change keyup paste input", function() {
 
 			var pw = $('.pw_input').val().trim();
 			// var pwck = $('.pwck_input').val().trim();

@@ -1,7 +1,5 @@
 package com.shop.mall.service;
 
-import java.util.Optional;
-
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,11 +7,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.shop.mall.dto.MemberFormDto;
 import com.shop.mall.entity.Member;
 import com.shop.mall.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 
 @Service
 
@@ -81,9 +81,11 @@ public class MemberService implements UserDetailsService {
 		Member member = memberRepository.findByLoginId(loginId);
 
 		if (member == null) {
-			throw new UsernameNotFoundException(loginId);
+			throw new UsernameNotFoundException("해당 사용자가 없습니다."+loginId);
 		}
 
+		log.info("loadUserByUsername : "+ member);
+		
 		// UserDetail을 구현하고 있는 User 객체를 반환해줍니다.
 		// User 객체를 생성하기 위해서 생성자로 회원의 로그인 아이디, 비밀번호, role을 파라미터로 넘겨 줍니다.
 		return User.builder()

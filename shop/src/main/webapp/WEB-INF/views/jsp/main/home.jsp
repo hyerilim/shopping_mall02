@@ -22,9 +22,14 @@
 
 	<!-- 로그인(인증된) 사용자인 경우 -->
 	<!-- isAuthenticated() : 인증된 사용자면 true -->
-	<sec:authorize access="isAuthenticated()">	
+	<sec:authorize access="isAuthenticated()">
 		<a href="#">장바구니</a>
 		<a href="#">구매이력</a>
+		<sec:authorize access="hasAnyAuthority('ROLE_ADMIN')">
+			<a href="#">상품등록</a>
+			<a href="#">상품관리</a>
+		</sec:authorize>
+		<a href="/admin/test/new">테스트등록</a>
 		<a href="/members/logout">로그아웃</a>
 	</sec:authorize>
 
