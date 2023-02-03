@@ -11,8 +11,8 @@
 <title>메인페이지</title>
 </head>
 <body>
+	<jsp:include page="../nav.jsp"></jsp:include>
 	<h2>메인페이지</h2>
-
 	<!-- 로그인 안 한 익명일 경우 -->
 	<!-- isAnonymous() : 익명 사용자이면 true(로그인 안한 사용자도 익명으로 간주) -->
 	<sec:authorize access="isAnonymous()">
