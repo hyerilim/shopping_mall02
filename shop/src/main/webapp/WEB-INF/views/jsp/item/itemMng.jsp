@@ -27,6 +27,7 @@
 			<td>상태</td>
 			<td>등록자</td>
 			<td>등록일</td>
+			<td>수정</td>
 		</tr>
 		</thead>
 		
@@ -41,11 +42,16 @@
 			<td>${(item.itemSellStatus=="SELL") ? '판매중':'품절'}</td>
 			<td>${item.createdBy}</td>
 			<td>${item.regTime}</td>
+			<td><a href="/admin/item/${item.id}">수정</a></td>
 		</tr>
 		</tbody>
 		</c:forEach>
 	</table>
 	
+	${items.totalPages} items.totalPages/
+	<c:forEach var="i" begin="0" end="${items.totalPages}">
+	페이징<a href="#" onclick="page('${items.number+i}')">${items.number+i}</a>
+	</c:forEach>
 	
 	<div class="form-inline justify-content-center">
 		<select class="form-control" id="searchDateType" name="searchDateType" style="width:auto;">
@@ -69,6 +75,7 @@
 	</div>
 	
 </form>
+
 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.3.js"></script>
 <script type="text/javascript">
