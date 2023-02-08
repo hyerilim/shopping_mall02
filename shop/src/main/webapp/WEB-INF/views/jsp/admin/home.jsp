@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-
 </head>
 <body>
 	<jsp:include page="../nav.jsp"></jsp:include>

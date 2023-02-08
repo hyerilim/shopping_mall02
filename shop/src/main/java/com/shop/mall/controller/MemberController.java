@@ -5,6 +5,8 @@ import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,8 +29,16 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/members")
 @Controller
 @RequiredArgsConstructor
+
+// 이메일 아이디 주소 동적으로 변환하기 위해서
+@PropertySource("classpath:application.properties")
 public class MemberController {
 
+	// application.properties 이메일 아이디 불러오기(발송 이메일 주소)
+	@Value("${spring.mail.username}")
+    private String sendEmailId;
+	
+	
 	// 로그 기록을 남기기 위해서 Logger 클래스 logger 변수를 선언, Lombok @Log4j 어노테이션을 선언가능
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
@@ -145,7 +155,7 @@ public class MemberController {
 
 		/* 이메일 보내기 */
 		// application.properties에 삽입한 자신의 이메일 계정의 이메일 주소입니다. (아이디만 입력하는 것이 아니라 이메일 주소를 입력해야 합니다.)
-		String setFrom = "dbxowhdsla12@naver.com";
+		String setFrom = sendEmailId;
 
 		// 수신받을 이메일입니다. 뷰로부터 받은 이메일 주소인 변수 email을 사용하였습니다.
 		String toMail = email;
@@ -158,7 +168,6 @@ public class MemberController {
 				+ "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
 
 		// 이메일 전송을 위한 코드 삽입
-
 		try {
 
 			MimeMessage message = mailSender.createMimeMessage();

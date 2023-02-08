@@ -27,6 +27,9 @@ public class SecurityConfig {
 	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		
+		// 로그인, 로그인실패 핸들러 구현
+		
 		http.formLogin()
 				// 1 로그인 페이지 uRl을 설정합니다.
 				.loginPage("/members/login")

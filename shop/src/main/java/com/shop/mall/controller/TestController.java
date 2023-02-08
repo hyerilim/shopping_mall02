@@ -10,4 +10,19 @@ public class TestController {
 	public String testForm() {
 		return "jsp/test/testForm";
 	}
+	
+	@GetMapping(value="/test/testDate")
+	public String testDate() {
+		return "jsp/test/testDate";
+	}
+	
+	@GetMapping(value="/test/testDate1")
+	public String testDate1() {
+		return "jsp/test/test3";
+	}
+	
+	@GetMapping(value="/test/test1")
+	public String test1() {
+		return "jsp/test/test1";
+	}
 }
