@@ -8,12 +8,15 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.shop.mall.constant.ItemSellStatus;
 import com.shop.mall.dto.ItemSearchDto;
+import com.shop.mall.dto.MainItemDto;
 import com.shop.mall.entity.Item;
 import com.shop.mall.entity.QItem;
+import com.shop.mall.entity.QItemImg;
 
 import jakarta.persistence.EntityManager;
 
@@ -71,4 +74,32 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 
 				return new PageImpl<>(results , pageable, results.size());
 	}
+	
+	//getMainItemPage 메소드 구현
+	private BooleanExpression itemNmLike(String searchQuery) {
+		return StringUtils.hasText(searchQuery) ? QItem.item.itemNm.like("%" + searchQuery +"%") : null;
+	}
+	
+	@Override
+	public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
+		
+		QItem item = QItem.item;
+		QItemImg itemImg = QItemImg.itemImg;
+		
+		List<MainItemDto> results = queryFactory
+				.select(Projections.constructor(MainItemDto.class,
+						item.id,
+						item.itemNm, item.itemDetail,itemImg.imgUrl,item.price))
+				.from(itemImg)
+				.where(itemImg.repimgYn.eq("Y"))
+				.where(itemNmLike(itemSearchDto.getSearchQuery()))
+				.orderBy(item.id.desc())
+				.offset(pageable.getOffset())
+				.limit(pageable.getPageSize())
+				.fetch();
+
+		return new PageImpl<>( results , pageable, results.size());
+	}
+	
+	
 }

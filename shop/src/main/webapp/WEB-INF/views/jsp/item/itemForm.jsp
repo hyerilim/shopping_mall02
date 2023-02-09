@@ -91,7 +91,6 @@
 	</div>
 	</c:if>
 	
-	
 	<c:if test="${empty itemImgDto.id}">
 		<input type="submit" value="저장" class="btn btn-primary">
 	</c:if>

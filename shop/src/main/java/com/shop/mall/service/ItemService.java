@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.shop.mall.dto.ItemFormDto;
 import com.shop.mall.dto.ItemImgDto;
 import com.shop.mall.dto.ItemSearchDto;
+import com.shop.mall.dto.MainItemDto;
 import com.shop.mall.entity.Item;
 import com.shop.mall.entity.ItemImg;
 import com.shop.mall.repository.ItemImgRepository;
@@ -87,6 +88,13 @@ public class ItemService {
 	@Transactional(readOnly=true)
 	public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
 		return itemRepository.getAdminItemPage(itemSearchDto, pageable);
+	}
+	
+	
+	//메인페이지 보여줄 상품 데이터를 조회
+	@Transactional(readOnly = true)
+	public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
+		return itemRepository.getMainItemPage(itemSearchDto, pageable);
 	}
 	
 }

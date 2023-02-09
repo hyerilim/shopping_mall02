@@ -48,10 +48,15 @@
 		</c:forEach>
 	</table>
 	
+	<a href="#" onclick="page('${items.number-1}')">이전</a>
+	${page}
 	${items.totalPages} items.totalPages/
-	<c:forEach var="i" begin="0" end="${items.totalPages}">
+	<c:forEach var="i" begin="0" end="${maxPage}">
+	
 	페이징<a href="#" onclick="page('${items.number+i}')">${items.number+i}</a>
 	</c:forEach>
+	
+	<a href="#" onclick="page('${items.number+1}')">다음</a>
 	
 	<div class="form-inline justify-content-center">
 		<select class="form-control" id="searchDateType" name="searchDateType" style="width:auto;">
