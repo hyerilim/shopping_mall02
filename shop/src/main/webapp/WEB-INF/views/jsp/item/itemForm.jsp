@@ -90,15 +90,13 @@
 	</c:forEach>
 	</div>
 	</c:if>
-	
-	<c:if test="${empty itemImgDto.id}">
-		<input type="submit" value="저장" class="btn btn-primary">
+
+	<c:if test="${empty itemFormDto.itemImgDtoList}">
+		<input onclick="location.href='/admin/item/new'" type="submit" value="저장" class="btn btn-primary">
 	</c:if>
-	<c:if test="${not empty itemImgDto.id}">
-		<input type="submit" value="수정" class="btn btn-primary">
+	<c:if test="${not empty itemFormDto.itemImgDtoList}">
+		<button type="submit" value="수정" class="btn btn-primary">수정</button>
 	</c:if>	
-
-
 </form>
 
 

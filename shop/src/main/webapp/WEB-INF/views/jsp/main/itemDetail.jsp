@@ -65,16 +65,18 @@
                         <h1 class="display-5 fw-bolder">${item.itemNm}</h1>
                         <div class="fs-5 mb-5">
                             <span class="text-decoration-line-through">45.00</span>
+                            <input type="hidden" id="price" value="${item.price}">
                             <span>가격 : ${item.price} 원</span>
                         </div>
                        
                         <div class="d-flex">
-                            <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
+                        	<input type="hidden" id="itemId" value="${item.id}">
+                            <input class="form-control text-center me-3" id="count" type="num" value="1" style="max-width: 3rem" />
                             <button class="btn btn-outline-dark flex-shrink-0" type="button">
                                 <i class="bi-cart-fill me-1"></i>
                                 장바구니
                             </button>
-                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="order()">
                                	구매하기
                             </button>
 
@@ -200,6 +202,66 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        <script src=""></script>
+
+        
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.3.js"></script>
+<script type="text/javascript">
+        $(document).ready(function(){
+
+            calculateToalPrice();
+
+            $("#count").change( function(){
+                calculateToalPrice();
+            });
+        });
+
+        function calculateToalPrice(){
+            var count = $("#count").val();
+            var price = $("#price").val();
+            var totalPrice = price*count;
+            $("#totalPrice").html(totalPrice + '원');
+        }
+
+        function order(){
+            //var token = $("meta[name='_csrf']").attr("content");
+            //var header = $("meta[name='_csrf_header']").attr("content");
+
+            var url = "/order";
+            var paramData = {
+                itemId : $("#itemId").val(),
+                count : $("#count").val()
+            };
+
+            var param = JSON.stringify(paramData);
+
+            $.ajax({
+                url      : url,
+                type     : "POST",
+                contentType : "application/json",
+                data     : param,
+               // beforeSend : function(xhr){
+               //     /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+               //     xhr.setRequestHeader(header, token);
+               //},
+                dataType : "json",
+                cache   : false,
+                success  : function(result, status){
+                    alert("주문이 완료 되었습니다.");
+                    location.href='/';
+                },
+                error : function(jqXHR, status, error){
+
+                    if(jqXHR.status == '401'){
+                        alert('로그인 후 이용해주세요');
+                        location.href='/members/login';
+                    } else{
+                        alert(jqXHR.responseText);
+                    }
+
+                }
+            });
+        }  
+</script>
+
     </body>
 </html>

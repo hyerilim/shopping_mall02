@@ -59,6 +59,19 @@
         <!-- Section  리스트-->
         <div class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
+                
+                <form>
+                <div class="mx-quto input-group mb-5">
+                	<input id="searchQuery" name="searchQuery" type="text" class="form-control mr-sm-2" placeholder="상품명 검색">
+					<button id="searchBtn" type="submit" class="btn btn-outline-success my-2 my-sm-0">검색</button>
+                </div>
+                </form>
+                
+                <input type="hidden" name="searchQuery" value="${itemSearchDto.searchQuery}">
+					<c:if test="${not empty itemSearchDto.searchQuery}">
+					<p>'${itemSearchDto.searchQuery}' 검색결과</p>
+				</c:if>
+                
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-start">
                 <c:forEach var="item" items="${items.getContent()}" varStatus="status">    
                     <div class="col mb-5">
@@ -66,12 +79,13 @@
                             <!-- Product image-->
                         <a href="/item/${item.id}">상세
                         	<img class="card-img-top" src="${item.imgUrl}" alt="..." />
+                       	</a>
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
                                     <h5 class="fw-bolder">${item.itemNm}</h5>
-                        </a>
+                        
                                     <!-- Product price-->
                                     가격 : ${item.price} 원
                                 </div>
