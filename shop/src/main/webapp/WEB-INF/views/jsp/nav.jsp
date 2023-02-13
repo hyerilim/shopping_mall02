@@ -12,7 +12,7 @@
 <title>Insert title here</title>
 
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
+	href="${pageContext.request.contextPath}/resources/css/bootstrap2.css">
 
 </head>
 <body>
@@ -20,7 +20,7 @@
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="#">Navbar</a>
+			<a class="navbar-brand" href="/">Navbar</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarColor02"
 				aria-controls="navbarColor02" aria-expanded="false"
@@ -29,7 +29,7 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarColor02">
 				<ul class="navbar-nav me-auto">
-					<li class="nav-item"><a class="nav-link active" href="#">Home
+					<li class="nav-item"><a class="nav-link active" href="/item">Home
 							<span class="visually-hidden">(current)</span>
 					</a></li>
 					<!-- 로그인 안 한 익명일 경우 -->
@@ -54,10 +54,10 @@
 						</li>
 						<sec:authorize access="hasAnyAuthority('ROLE_ADMIN')">
 							<li class="nav-item">
-								<a class="nav-link" href="#">상품등록</a>
+								<a class="nav-link" href="/admin/item/new">상품등록</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#">상품관리</a>
+								<a class="nav-link" href="/admin/items">상품관리</a>
 							</li>
 						</sec:authorize>
 							<li class="nav-item">
