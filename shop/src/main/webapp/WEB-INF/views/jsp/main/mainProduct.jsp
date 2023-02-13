@@ -122,8 +122,8 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-<script src="${pageContext.request.contextPath}/resources/js/cart.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/order.js"></script>       
+<script src="${pageContext.request.contextPath}/resources/js/item/cart.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/item/order.js"></script>       
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.3.js"></script>
 
     </body>
