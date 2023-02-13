@@ -50,7 +50,7 @@
 							<a class="nav-link" href="#">장바구니</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">구매이력</a>
+							<a class="nav-link" href="/orders">구매이력</a>
 						</li>
 						<sec:authorize access="hasAnyAuthority('ROLE_ADMIN')">
 							<li class="nav-item">

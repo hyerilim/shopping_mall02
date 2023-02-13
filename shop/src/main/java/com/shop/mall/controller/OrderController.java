@@ -2,17 +2,25 @@ package com.shop.mall.controller;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shop.mall.dto.OrderDto;
+import com.shop.mall.dto.OrderHistDto;
 import com.shop.mall.service.OrderService;
 
 import jakarta.validation.Valid;
@@ -24,7 +32,7 @@ public class OrderController {
 
 	private final OrderService orderService;
 	
-	// 비동기 처리
+	// 주문완료 비동기 처리
 	@PostMapping(value = "/order")
 	public @ResponseBody ResponseEntity<?> order (@RequestBody @Valid OrderDto orderDto
 			, BindingResult bindingResult
@@ -49,6 +57,20 @@ public class OrderController {
 		}
 		
 		return new ResponseEntity<Long>(orderId, HttpStatus.OK);
+	}
+	
+	// 구매이력 확인 페이지
+	@GetMapping(value = {"/orders", "/orders/{page}"})
+    public String orderHist(@PathVariable("page") Optional<Integer> page, Principal principal, Model model){
+
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 4);
+        Page<OrderHistDto> ordersHistDtoList = orderService.getOrderList(principal.getName(), pageable);
+
+        model.addAttribute("orders", ordersHistDtoList);
+        model.addAttribute("page", pageable.getPageNumber());
+        model.addAttribute("maxPage", 5);
+		
+		return "jsp/order/orderHist";
 	}
 	
 }

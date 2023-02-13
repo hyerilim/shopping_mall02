@@ -10,8 +10,6 @@
 	content="${_csrf.headerName}">
 <title>상품등록</title>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
-
 <style type="text/css">
 .input-group{
 		margin-bottom : 15px
