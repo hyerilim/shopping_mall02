@@ -8,6 +8,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
+        <meta id="_csrf" name="_csrf" content="${_csrf.token}">
+		<meta id="_csrf_header" name="_csrf_header"
+				content="${_csrf.headerName}">
         <title>상품 리스트</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
@@ -76,7 +79,9 @@
 				</c:if>
                 
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-start">
-                <c:forEach var="item" items="${items.getContent()}" varStatus="status">    
+                <c:forEach var="item" items="${items.getContent()}" varStatus="status">
+                <input type="hidden" id="itemId" value="${item.id}">  
+                <input type="hidden" id="count" value="1">  
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Product image-->
@@ -96,8 +101,8 @@
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center">
-                                    <a class="btn btn-outline-dark mt-auto" href="#">장바구니</a>
-                                    <a class="btn btn-outline-dark mt-auto" href="#">구매하기</a>
+                                    <a class="btn btn-outline-dark mt-auto" href="javascript:void(0);" onclick="addCart()">장바구니</a>
+                                    <a class="btn btn-outline-dark mt-auto" href="javascript:void(0);" onclick="order()">구매하기</a>
                                 </div>
                             </div>
                         </div>
@@ -117,6 +122,9 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        <script src=""></script>
+<script src="${pageContext.request.contextPath}/resources/js/cart.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/order.js"></script>       
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.3.js"></script>
+
     </body>
 </html>
