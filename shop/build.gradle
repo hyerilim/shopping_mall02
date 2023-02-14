@@ -1,7 +1,16 @@
+buildscript {
+   ext {
+      queryDslVersion = '5.0.0'
+   }
+}
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.0.2'
 	id 'io.spring.dependency-management' version '1.1.0'
+	
+	   //querydsl 추가
+   	id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
 }
 
 group = 'com.example'
@@ -35,6 +44,16 @@ dependencies {
 
 	// jstl 라이브러리 추가
 	implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:2.0.0'
+	
+	//modelmapper라이브러리
+	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.9'
+	
+	//파라미터 값 검증
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+   //querydsl 추가
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
 
 	// h2 데이터베이스 테스트용
 	testImplementation 'com.h2database:h2:2.1.214'
@@ -79,4 +98,30 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+//querydsl 추가 시작
+def querydslSrcDir = 'src/main/generated'
+querydsl{
+	library = "com.querydsl:querydsl-apt"
+	jpa = true
+	querydslSourcesDir = querydslSrcDir
+}
+compileQuerydsl{
+	options.annotationProcessorPath = configurations.querydsl
+}
+configurations {
+	querydsl.extendsFrom compileClasspath
+}
+sourceSets{
+	main{
+		java{
+			srcDirs = ['src/main/java', querydslSrcDir]
+		}
+	}
+}
+
+// 이 부분이 추가. 
+tasks.withType(JavaCompile) {
+	options.generatedSourceOutputDirectory = file(querydslSrcDir)
 }
