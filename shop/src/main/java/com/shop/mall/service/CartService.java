@@ -1,8 +1,12 @@
 package com.shop.mall.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.shop.mall.dto.CartDetailDto;
 import com.shop.mall.dto.CartItemDto;
 import com.shop.mall.entity.Cart;
 import com.shop.mall.entity.CartItem;
@@ -49,4 +53,23 @@ public class CartService {
 			return cartItem.getId();
 		}
 	}
+	
+	// 로그인 정보를 이용하여 장바구니에 들어있는 상품을 조회
+	@Transactional(readOnly = true)
+	public List<CartDetailDto> getCartList(String loginId) {
+	
+		List<CartDetailDto> cartDetailDtoList = new ArrayList<>();
+		
+		Member member = memberRepository.findByLoginId(loginId);
+		Cart cart = cartRepository.findByMemberId(member.getId());
+		
+		if(cart == null) {
+			return cartDetailDtoList;
+		}
+	
+		cartDetailDtoList = cartItemRepository.findCartDetailDtoList(cart.getId());
+		
+		return cartDetailDtoList;
+	}
+	
 }

@@ -84,12 +84,12 @@ public class OrderService {
     
     // 주문 취소
     @Transactional(readOnly = true)
-    public boolean validateOrder(Long orderId, String email) {
-    	Member curMember = memberRepository.findByEmail(email);
+    public boolean validateOrder(Long orderId, String loginId) {
+    	Member curMember = memberRepository.findByLoginId(loginId);
     	Order order = orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
     	Member savedMember = order.getMember();
     	
-    	if(!StringUtils.pathEquals(curMember.getEmail(), savedMember.getEmail())) {
+    	if(!StringUtils.pathEquals(curMember.getLoginId(), savedMember.getLoginId())) {
     		return false;
     	}
     	
