@@ -84,12 +84,12 @@ public class OrderService {
     
     // 주문 취소
     @Transactional(readOnly = true)
-    public boolean validateOrder(Long orderId, String email) {
-    	Member curMember = memberRepository.findByEmail(email);
+    public boolean validateOrder(Long orderId, String loginId) {
+    	Member curMember = memberRepository.findByLoginId(loginId);
     	Order order = orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
     	Member savedMember = order.getMember();
     	
-    	if(!StringUtils.pathEquals(curMember.getEmail(), savedMember.getEmail())) {
+    	if(!StringUtils.pathEquals(curMember.getLoginId(), savedMember.getLoginId())) {
     		return false;
     	}
     	
@@ -100,4 +100,24 @@ public class OrderService {
     	Order order = orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
     	order.cancelOrder();
     }
+    
+    
+    // 장바구니에서 주문할 상품 데이터를 전달받아서 주문을 생성하는 로직
+    public Long orders(List<OrderDto> orderDtoList, String loginId) {
+    	Member member = memberRepository.findByLoginId(loginId);
+    	List<OrderItem> orderItemList = new ArrayList<>();
+    	
+    	for(OrderDto orderDto : orderDtoList) {
+    		Item item = itemRepository.findById(orderDto.getItemId()).orElseThrow();
+    		
+    		OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
+    		orderItemList.add(orderItem);
+    	}
+    	
+    	Order order = Order.createOrder(member, orderItemList);
+    	orderRepository.save(order);
+    	
+    	return order.getId();
+    }
+    
 }

@@ -43,7 +43,7 @@ $(document).ready(function(){
                 },
                 error : function(jqXHR, status, error){
 
-                    if(jqXHR.status == '401'){
+                    if(jqXHR.status == '401' || jqXHR.status == '500'){
                         alert('로그인 후 이용해주세요');
                         location.href='/members/login';
                     } else{

@@ -83,7 +83,7 @@ public class ItemService {
         }
 
         return item.getId();
-	}
+    }
 	
 	
 	@Transactional(readOnly=true)
@@ -93,7 +93,6 @@ public class ItemService {
 	
 	
 	//메인페이지 보여줄 상품 데이터를 조회
-	@Transactional(readOnly = true)
 	public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
 		return itemRepository.getMainItemPage(itemSearchDto, pageable);
 	}

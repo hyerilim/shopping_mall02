@@ -47,7 +47,7 @@
 					<!-- isAuthenticated() : 인증된 사용자면 true -->
 					<sec:authorize access="isAuthenticated()">
 						<li class="nav-item">
-							<a class="nav-link" href="#">장바구니</a>
+							<a class="nav-link" href="/cart">장바구니</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="/orders">구매이력</a>
