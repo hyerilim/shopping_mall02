@@ -89,6 +89,7 @@
 	
 					// html로 보내기 위해서 선언
 					let htmlDate = '';
+					
 					let countMT = 0;
 					let countMO = 0;
 					let count = 0;
@@ -126,7 +127,6 @@
 								continue;
 							}
 						}
-						
 						
 						// 0,6 이면 불가(주말불가)
 						if(iDays==0 || iDays==6){

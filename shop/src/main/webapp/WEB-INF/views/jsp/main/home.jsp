@@ -24,12 +24,12 @@
 		
 	});
 	
-	
 </script>
 
 </head>
 
 <body>
+
 	<jsp:include page="../nav.jsp"></jsp:include>
 	<h2>메인페이지</h2>
 	
