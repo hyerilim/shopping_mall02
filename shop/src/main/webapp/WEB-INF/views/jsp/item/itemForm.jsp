@@ -8,7 +8,7 @@
 <meta id="_csrf" name="_csrf" content="${_csrf.token}">
 <meta id="_csrf_header" name="_csrf_header"
 	content="${_csrf.headerName}">
-<title>상품등록</title>
+<title>상품</title>
 
 <style type="text/css">
 .input-group{
@@ -30,11 +30,15 @@
 <form role="form" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
-	<p class="h2">상품 등록</p>
 	
-	<input type="hidden" value="${itemFormDto.id}">
-	<input type="hidden" value="${itemFormDto}">
-
+	<c:if test="${empty itemFormDto.id}">
+		<p class="h2">상품 등록</p>
+	</c:if>
+	<c:if test="${not empty itemFormDto.id}">
+		<p class="h2">상품 수정</p>
+	</c:if>
+	
+	<input type="hidden" name="id" value="${itemFormDto.id}">
 	
 	<div class="form-group">
 		<select name="itemSellStatus" class="custom-select">
@@ -86,20 +90,20 @@
 	
 	<c:if test="${not empty itemFormDto.itemImgDtoList}">
 	<div class="form-group">	
-	<c:forEach var="itemImgDtoList" items="${itemFormDto.itemImgDtoList}" varStatus="status">
+	<c:forEach var="itemImgDto" items="${itemFormDto.itemImgDtoList}" varStatus="status">
 		<div class="custom-file img-div">
 			<input type="file" class="custom-file-input" name="itemImgFile">
-			<input type="hidden" class="custom-file-input" name="itemImgIds" value="${itemImgDtoList.id}">
-			<label class="custom-file-label">${(not empty itemImgDtoList.oriImgName) ? itemImgDtoList.oriImgName :'상품이미지'}</label>
+            <input type="hidden" name="itemImgIds" value="${itemImgDto.id}">
+			<label class="custom-file-label">${(not empty itemImgDto.oriImgName) ? itemImgDto.oriImgName :'상품이미지'}</label>
 		</div>
 	</c:forEach>
 	</div>
 	</c:if>
 
-	<c:if test="${empty itemFormDto.itemImgDtoList}">
+	<c:if test="${empty itemFormDto.id}">
 		<input onclick="location.href='/admin/item/new'" type="submit" value="저장" class="btn btn-primary">
 	</c:if>
-	<c:if test="${not empty itemFormDto.itemImgDtoList}">
+	<c:if test="${not empty itemFormDto.id}">
 		<button type="submit" value="수정" class="btn btn-primary">수정</button>
 	</c:if>	
 </form>
@@ -110,7 +114,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		var errorMessage = [[${errorMessage}]];
+		var errorMessage = ${errorMessage};
 		if(errorMessage != null){
 			alert(errorMessage);
 		}

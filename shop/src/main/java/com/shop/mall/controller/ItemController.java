@@ -99,11 +99,11 @@ public class ItemController {
 	}
 	
 	
-	@GetMapping(value = {"/admin/items", "/admin/items/{page}"})
+	@GetMapping(value = "/admin/items")
 	public String itemManage(ItemSearchDto itemSearchDto
-			, @PathVariable("page") Optional<Integer> page, Model model) {
+			, @RequestParam(value="page", defaultValue="1") int page, Model model) {
 		
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 3);
+		Pageable pageable = PageRequest.of(page-1, 5);
 	
 		Page<Item> items = itemService.getAdminItemPage(itemSearchDto, pageable);
 		model.addAttribute("items", items);

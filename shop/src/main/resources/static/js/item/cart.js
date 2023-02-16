@@ -22,12 +22,16 @@ function addCart(){
         dataType : "json",
         cache   : false,
         success  : function(result, status){
-            alert("상품을 장바구니에 담았습니다.");
-            location.href='/';
+        var confirm1= confirm("장바구니에 담기 완료!!! 확인버튼을 누르면 장바구니로 이동합니다.");
+        if(confirm1){
+			location.href='/cart';
+		} else{
+			location.href='/item';	 
+		}		 
         },
         error : function(jqXHR, status, error){
 
-            if(jqXHR.status == '401'){
+            if(jqXHR.status == '401' || jqXHR.status == '500'){
                 alert('로그인 후 이용해주세요');
                 location.href='/members/login';
             } else{

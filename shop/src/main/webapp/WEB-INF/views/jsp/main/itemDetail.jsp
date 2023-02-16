@@ -76,7 +76,7 @@
                             <input type="hidden" id="price" value="${item.price}">
                             <span>가격 : ${item.price} 원</span>
                         </div>
-                       
+                       <span>재고 : ${item.stockNumber} 개</span>
                         <div class="d-flex">
                         	<input type="hidden" id="itemId" value="${item.id}">
                             <input class="form-control text-center me-3" id="count" type="num" value="1" style="max-width: 3rem" />

@@ -1,7 +1,5 @@
 package com.shop.mall.controller;
 
-import java.util.Optional;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.shop.mall.dto.ItemFormDto;
 import com.shop.mall.dto.ItemSearchDto;
@@ -24,8 +23,8 @@ public class Maincontroller {
 	private final ItemService itemService;
 	
 	@GetMapping(value="/item")
-	public String main(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model) {
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 8);
+	public String main(ItemSearchDto itemSearchDto, @RequestParam(value="page", defaultValue="1") int page, Model model) {
+		Pageable pageable = PageRequest.of(page-1, 8);
 		Page<MainItemDto> items = itemService.getMainItemPage(itemSearchDto, pageable);
 		
 		model.addAttribute("items",items);

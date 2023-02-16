@@ -108,8 +108,51 @@
                         </div>
                     </div>
                     </c:forEach>
-                    </div>
-	페이징
+                    </div> 
+
+			${(items.totalPages == 0) ? 1 : (start + (maxPage - 1) < items.totalPages ? start + (maxPage - 1) : items.totalPages)}
+			${param.page}
+			<c:set var="page" value="${(empty param.page)?1:param.page}"></c:set>
+			<c:set var="startNum" value="${page -(page-1) % 5}"></c:set>
+			<c:set var="lastNum" value="${items.getTotalPages()}"></c:set>
+
+			<div aria-label="Pagination">
+	            <ul class="pagination justify-content-center my-2">
+	                
+	                <li class="page-item ${(items.number-1 < 0)?'disabled':''}">
+					<a class="page-link" href="?searchQuery=${itemSearchDto.searchQuery}&page=1">
+	                    <span> 첫 페이지 </span>
+	                </a>
+					</li>
+	                
+	                <c:if test="${startNum-1 > 0}">
+	                <li class="page-item"><a class="page-link" href="?searchQuery=${itemSearchDto.searchQuery}&page=${startNum - 1}">이전</a></li>
+					</c:if>
+					<c:if test="${startNum-1 <= 0}">
+						<span class="page-item page-link" onclick="alert('이전 페이지가 없습니다.')">이전</span>
+					</c:if>
+						<c:forEach var="i" begin="0" end="4">
+							<!-- 마지막 게시물이 있는 페이지까지만 표시 -->
+							<c:if test="${(i+startNum) <= lastNum}">
+								<!-- // 해당 페이지 인 경우, 스타일 지정 -->									
+		                		<li class="page-item ${(page==(i+startNum))?'active':''}"><a class="page-link" href="?searchQuery=${itemSearchDto.searchQuery}&page=${i+startNum}">${i+startNum}</a></li>
+							</c:if>
+						</c:forEach>
+	            	<c:if test="${startNum + 4 < lastNum}">
+	            	<li class="page-item"><a class="page-link" href="?searchQuery=${itemSearchDto.searchQuery}&page=${startNum + 5}">다음</a></li>
+					</c:if>
+					<c:if test="${startNum + 4 >= lastNum}">
+							<span class="page-item page-link" onclick="alert('다음 페이지가 없습니다.')">다음</span>
+					</c:if>
+					
+					<li class="page-item ${(param.page==items.totalPages) ?'disabled':''}">
+					<a class="page-link" href="?searchQuery=${itemSearchDto.searchQuery}&page=${items.totalPages}">
+	                    <span> 마지막 페이지 </span>
+	                </a>
+					</li>
+	            </ul>
+	        </div>   
+	
                 </div>
             </div>
         

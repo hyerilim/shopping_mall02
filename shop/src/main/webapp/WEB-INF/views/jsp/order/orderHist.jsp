@@ -41,7 +41,7 @@
  </c:forEach>
 
 ${orders}
- 
+
 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.3.js"></script>
 <script type="text/javascript">

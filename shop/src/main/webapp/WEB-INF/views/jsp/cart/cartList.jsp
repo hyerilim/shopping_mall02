@@ -24,7 +24,7 @@
     <div class="cart">
 
 		<div class="bigtext left-align sumcount buttongroup">장바구니 목록</div>
-        <div class="bigtext left-align sumcount" id="sum_p_num">상품갯수: ${cartItems.size()}개</div>
+        <div class="left-align" id="sum_p_num">장바구니에 담긴 상품갯수: ${cartItems.size()}개</div>
         <div class="bigtext left-align box blue summoney" id="sum_p_price">
         	총 주문 금액 : <span id="orderTotalPrice" class="text-danger">0원</span>
         </div>
@@ -38,7 +38,7 @@
             <div class="basketdiv" id="basket">
                 <div class="row head">
                     <div class="subdiv">
-                        <div class="check"><input type="checkbox" id="checkall" onclick="checkAll()"></div>
+                        <div class="check"><input type="checkbox" id="checkall" class="form-check-input" onclick="checkAll()"></div>
                         <div class="img">상품</div>
                         <div class="pname">상품명</div>
                     </div>
@@ -53,10 +53,13 @@
                     <div class="split"></div>
                 </div>
                 
+            <c:if test="${empty cartItems}">
+             장바구니에 상품이 없습니다.
+            </c:if>
 			<c:forEach var="cartItem" items="${cartItems}">        
                 <div class="row data">
                     <div class="subdiv">
-                        <div class="check"><input type="checkbox" name="cartChkBox" value="${cartItem.cartItemId}">&nbsp;</div>
+                        <div class="check"><input type="checkbox" name="cartChkBox"  id="cartItemId" class="form-check-input" value="${cartItem.cartItemId}">&nbsp;</div>
                         <div class="img" ><img src="${cartItem.imgUrl}" width="130"></div>
                         <div class="pname">
                         	<a style="color: inherit; text-decoration: none;" href="">
@@ -70,14 +73,14 @@
                         	value="${cartItem.count}" min="1" onchange="changeCount(this)" class="form-control mt-4 p_num"> </div>
                         <div class="basketprice"><input type="hidden" id="price_${cartItem.cartItemId}" class="p_price" data-price="${cartItem.price}" value="${cartItem.price}">${cartItem.price}</div>
                         <div class="sum">
-                        	<span id="totalPrice_${cartItem.cartItemId}" name="totalPrice">
+                        	<span name="totalPrice" id="totalPrice_${cartItem.cartItemId}">
                         		${cartItem.price * cartItem.count} 원
                     		</span>
                         </div>
                     </div>
                     <div class="subdiv">
                         <div class="basketcmd">
-                        	<button type="button" id="${cartItem.cartItemId}" value="${cartItem.cartItemId}" class="btn btn-outline-info" onclick="deleteCartItem(this)">X</button>
+                        	<button type="button" id="${cartItem.cartItemId}" value="${cartItem.cartItemId}" data-id="${cartItem.cartItemId}" class="btn btn-outline-info" onclick="deleteCartItem(this)">X</button>
                         </div>
                     </div>  
                 </div>
@@ -86,8 +89,8 @@
 
             <div id="goorder" class="">
                 <div class="buttongroup center-align cmd">
-                    <a href="/item" class="btn btn-primary btn-lg">다른 상품 보러가기</a>
-                    <a href="javascript:void(0);"  class="btn btn-primary btn-lg" onclick="orders()">주문하기</a>
+                    <button href="/item" class="btn btn-primary btn-lg" onclick = "location.href = '/item' ">다른 상품 보러가기</button>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="orders()">주문하기</button>
                 </div>
             </div>
             
@@ -100,7 +103,7 @@
             </div>
         </div>
       </div>
-      
+  
  
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.3.js"></script>
 <script type="text/javascript">
