@@ -14,13 +14,13 @@ $(document).ready(function(){
             $("#totalPrice").html(totalPrice + '원');
         }
 
-        function order(){
+        function order(id){
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
 
             var url = "/order";
             var paramData = {
-                itemId : $("#itemId").val(),
+                itemId : $("#itemId"+id).val(),
                 count : $("#count").val()
             };
 
