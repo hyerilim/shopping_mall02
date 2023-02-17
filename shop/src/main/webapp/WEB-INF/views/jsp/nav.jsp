@@ -49,20 +49,6 @@
 							href="/members/login">로그인</a></li>
 					</sec:authorize>
 
-					<!-- 유저 -->
-					<sec:authorize access="hasAnyAuthority('ROLE_USER')">
-						<li class="nav-item"><a class="nav-link" href="#">상품목록</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">장바구니</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">구매이력</a></li>
-						<li class="nav-item"><a class="nav-link"
-							href="/members/update">회원정보</a></li>
-					</sec:authorize>
-
-					<!-- 관리자 -->
-					<sec:authorize access="hasAnyAuthority('ROLE_ADMIN')">
-						<li class="nav-item"><a class="nav-link" href="#">상품등록</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">상품관리</a></li>
-					</sec:authorize>
 
 					<!-- 로그인(인증된) 사용자인 경우 -->
 					<!-- isAuthenticated() : 인증된 사용자면 true -->
