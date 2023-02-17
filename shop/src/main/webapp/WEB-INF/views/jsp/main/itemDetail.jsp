@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Shop Item - Start Bootstrap Template</title>
+        <title>상품 상세</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
@@ -78,13 +78,13 @@
                         </div>
                        <span>재고 : ${item.stockNumber} 개</span>
                         <div class="d-flex">
-                        	<input type="hidden" id="itemId" value="${item.id}">
+                        	<input type="hidden" id="itemId${item.id}" value="${item.id}">
                             <input class="form-control text-center me-3" id="count" type="num" value="1" style="max-width: 3rem" />
-                            <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="addCart()">
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="addCart('${item.id}')">
                                 <i class="bi-cart-fill me-1"></i>
                                 장바구니
                             </button>
-                            <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="order()">
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="order('${item.id}')">
                                	구매하기
                             </button>
 
@@ -210,9 +210,10 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.3.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/item/cart.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/item/order.js"></script>       
-<script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.3.js"></script>
+
 
     </body>
 </html>

@@ -1,10 +1,10 @@
-function addCart(){
+function addCart(id){
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
 
     var url = "/cart";
     var paramData = {
-        itemId : $("#itemId").val(),
+        itemId : $("#itemId"+id).val(),
         count : $("#count").val()
     };
 
@@ -22,12 +22,8 @@ function addCart(){
         dataType : "json",
         cache   : false,
         success  : function(result, status){
-        var confirm1= confirm("장바구니에 담기 완료!!! 확인버튼을 누르면 장바구니로 이동합니다.");
-        if(confirm1){
-			location.href='/cart';
-		} else{
-			location.href='/item';	 
-		}		 
+            alert("상품을 장바구니에 담았습니다.");
+            location.href='/';
         },
         error : function(jqXHR, status, error){
 

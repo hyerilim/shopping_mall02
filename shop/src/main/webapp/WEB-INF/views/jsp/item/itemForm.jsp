@@ -38,6 +38,8 @@
 		<p class="h2">상품 수정</p>
 	</c:if>
 	
+	<p>${errorMessage}</p>
+	
 	<input type="hidden" name="id" value="${itemFormDto.id}">
 	
 	<div class="form-group">
@@ -53,7 +55,6 @@
 		</div>
 		<input type="text" id="itemNm" name="itemNm" value="${itemFormDto.itemNm}" class="form-control" placeholder="상품명을 입력해주세요">	
 	</div>
-	<p>${errorMessage}</p>
 	
 	<div class="input-group">
 		<div class="input-group-prepend">
@@ -114,8 +115,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		var errorMessage = ${errorMessage};
-		if(errorMessage != null){
+		var errorMessage = "${errorMessage}";
+		if(errorMessage != ""){
 			alert(errorMessage);
 		}
 		bindDomEvent();

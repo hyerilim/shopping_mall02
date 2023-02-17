@@ -1,7 +1,6 @@
 package com.shop.mall.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -43,7 +42,7 @@ public class ItemController {
 							, @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList) {
 		
 		if(bindingResult.hasErrors()) {
-			model.addAttribute("errorMessage", "error");
+			model.addAttribute("errorMessage", "내용을 입력해주세요.");
 			return "jsp/item/itemForm";
 		}
 		
