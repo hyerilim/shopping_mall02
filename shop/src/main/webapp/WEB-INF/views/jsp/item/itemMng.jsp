@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<jsp:include page="../nav.jsp"></jsp:include>
+<jsp:include page="../admin/nav.jsp"></jsp:include>
 
 <form action="/admin/items/${items.number}" method="get" id="searchForm">
 	<table class="table mt-4 mb-4">

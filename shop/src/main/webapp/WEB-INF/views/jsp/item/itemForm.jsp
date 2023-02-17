@@ -25,7 +25,7 @@
 </head>
 <body>
 
-<jsp:include page="../nav.jsp"></jsp:include>
+<jsp:include page="../admin/nav.jsp"></jsp:include>
 
 <form role="form" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="${_csrf.parameterName}"

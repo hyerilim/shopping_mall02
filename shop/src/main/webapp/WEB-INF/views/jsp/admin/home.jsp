@@ -8,7 +8,7 @@
 
 </head>
 <body>
-	<jsp:include page="../nav.jsp"></jsp:include>
+	<jsp:include page="nav.jsp"></jsp:include>
 	<h1>관리자 홈</h1>
 
 </body>

@@ -28,17 +28,17 @@
 		${orderItem.count}개 
 	 </c:forEach>
 	
-	<button type="button" value="${order.orderId}">결제</button>
+	<span>결제완료</span>
 	
 	   <c:if test="${order.orderStatus == 'ORDER'}">
 	   <button type="button" class="btn btn-outline-secondary" value="${order.orderId}" onclick="cancelOrder(this.value)">주문취소</button>
 	   </c:if>
 	   <c:if test="${order.orderStatus == 'CANCEL'}">
 	        (취소 완료)
-	    </c:if>
+	   </c:if>
 	
 </div>
- </c:forEach>
+</c:forEach>
 
 ${orders}
 

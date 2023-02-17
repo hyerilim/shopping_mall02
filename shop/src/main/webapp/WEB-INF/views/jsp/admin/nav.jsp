@@ -17,18 +17,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자</title>
+
 
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/bootstrap2.css">
+	href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
 
 </head>
 <body>
-
-
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="/">홈페이지 이름</a>
+			<a class="navbar-brand" href="/admin/home">홈페이지 이름</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarColor02"
 				aria-controls="navbarColor02" aria-expanded="false"
@@ -40,8 +39,6 @@
 					<!-- 로그인 안 한 익명일 경우 -->
 					<!-- isAnonymous() : 익명 사용자이면 true(로그인 안한 사용자도 익명으로 간주) -->
 					<sec:authorize access="isAnonymous()">
-						<li class="nav-item"><a class="nav-link" href="/members/new">회원가입</a>
-						</li>
 						<li class="nav-item"><a class="nav-link"
 							href="/members/login">로그인</a></li>
 					</sec:authorize>
@@ -75,7 +72,7 @@
 							<li class="nav-item">
 								<a class="nav-link" href="/members/logout">로그아웃</a>
 							</li>
-						</sec:authorize>
+					</sec:authorize>
 
 				</ul>
 				<form class="d-flex">
