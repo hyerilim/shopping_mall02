@@ -10,9 +10,5 @@ public class IndexController {
 	public String index() {
 		return "jsp/index";
 	}
-	@GetMapping(value="/")
-	public String root() {
-		return "jsp/index";
-	}
 	
 }
