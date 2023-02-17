@@ -23,4 +23,6 @@ public class MemberFormDto {
 	
 	private String addressDetail; // 상세주소
 	
+	// private String provider;
+	
 }

@@ -92,6 +92,10 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-config
 	implementation 'org.springframework.security:spring-security-config:6.0.1'
 	
+	// OAuth2 로그인을 위한 dependencies 부분은 oauth2-client와 security
+	// 이 라이브러리가 등록된 주소를 낚아챈다
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
 	
 
 }
