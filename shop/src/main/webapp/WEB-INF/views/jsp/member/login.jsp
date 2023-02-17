@@ -51,16 +51,22 @@
 			<button type="button" class="w-100 btn btn-lg btn-primary"
 				onClick="location.href='/members/new'">회원가입</button>
 
-			<br>
-			<br> <a
-				href="https://kauth.kakao.com/oauth/authorize?client_id=7f499a6249433360c21ff1f9c989da0b&redirect_uri=http://localhost:8000/members/oauth2/code/kakao&response_type=code">
-				<img width="300" height="47.6" alt="카카오"
-				src="${pageContext.request.contextPath}/resources/img/kakao_login_medium_narrow.png">
+			<br><br> 
+			
+			<a href="/oauth2/authorization/kakao">
+				<img width="300" height="47.6" alt="카카오" src="${pageContext.request.contextPath}/resources/img/kakao_login_medium_narrow.png">
 			</a>
+			
 			<br><br>
-			<a href="/oauth2/authorization/google"><img src="https://pngimage.net/wp-content/uploads/2018/06/google-login-button-png-1.png"
-		alt="google" width="300" height="47.6" ></a>
-
+			
+			<a href="/oauth2/authorization/google">
+				<img src="https://pngimage.net/wp-content/uploads/2018/06/google-login-button-png-1.png"alt="google" width="300" height="47.6" >
+			</a>
+			
+			<br><br>
+			
+			<a href="/oauth2/authorization/naver">네이버 로그인</a>
+			
 			<p class="mt-5 mb-3 text-muted">&copy; 2023</p>
 			<input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />

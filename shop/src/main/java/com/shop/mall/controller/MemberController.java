@@ -82,8 +82,8 @@ public class MemberController {
 //	@Autowired
 //	public AuthenticationManager authenticationManager;
 
-	@Value("${spring.cos.key}")
-	private String cosKey;
+//	@Value("${spring.cos.key}")
+//	private String cosKey;
 
 	// 회원가입 페이지로 이동할 수 있도록 MemberController 클래스에 메소드를 작성합니다.
 	// 회원가입 페이지 이동
