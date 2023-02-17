@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.shop.mall.config.auth.PrincipalDetails;
 import com.shop.mall.config.oauth.provider.GoogleUserInfo;
+import com.shop.mall.config.oauth.provider.KakaoUserInfo;
 import com.shop.mall.config.oauth.provider.NaverUserInfo;
 import com.shop.mall.config.oauth.provider.OAuth2UserInfo;
 import com.shop.mall.entity.Member;
@@ -76,7 +77,13 @@ public class PrincipalOAuth2UserService extends DefaultOAuth2UserService {
 			oAuth2UserInfo = new NaverUserInfo((Map<String, Object>) oAuth2User.getAttributes().get("response"));
 		} else if(userRequest.getClientRegistration().getRegistrationId().equals("kakao")) {
 			System.out.println("카카오 로그인 요청");
-			oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
+			System.out.println("id : "+ oAuth2User.getAttributes().get("id"));
+			System.out.println("properties : "+ oAuth2User.getAttributes().get("properties"));
+			Map<String, Object> kakao_account = (Map<String, Object>) oAuth2User.getAttributes().get("kakao_account");
+			System.out.println("kakao_account : "+ kakao_account);
+			System.out.println("profile : "+ kakao_account.get("profile"));
+			
+			oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes());
 		} else {
 			System.out.println("구글, 페이스북만 지원");
 		}
