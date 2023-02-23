@@ -44,6 +44,7 @@
                             <input type="hidden" id="price" value="${item.price}">
                             <span>가격 : ${item.price} 원</span>
                         </div>
+          <c:if test="${item.stockNumber > 0}">
                        <span>재고 : ${item.stockNumber} 개</span>
                         <div class="d-flex">
                         	<input type="hidden" id="itemId${item.id}" value="${item.id}">
@@ -55,9 +56,12 @@
                             <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="order('${item.id}')">
                                	구매하기
                             </button>
-
                         </div>
+           </c:if>
+           
                         <p class="lead">상품설명 : ${item.itemDetail}</p>
+
+           <c:if test="${item.stockNumber==0}">일시품절</c:if>
                     </div>
                 </div>
             </div>

@@ -1,9 +1,12 @@
 package com.shop.mall.entity;
 
+import java.util.List;
+
 import com.shop.mall.constant.ItemSellStatus;
 import com.shop.mall.dto.ItemFormDto;
 import com.shop.mall.exception.OutOfStockException;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -12,6 +15,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,6 +48,15 @@ public class Item extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private ItemSellStatus itemSellStatus; //상품 판매 상태
+    
+    @OneToMany(mappedBy = "item", cascade = {CascadeType.ALL}, orphanRemoval=true)
+    private List<ItemImg> itemImg;
+    
+    @OneToMany(mappedBy = "item", cascade = {CascadeType.ALL}, orphanRemoval=true)
+    private List<CartItem> cartItem;
+    
+    @OneToMany(mappedBy = "item", cascade = {CascadeType.ALL}, orphanRemoval=true)
+    private List<OrderItem> orderItem;
 
     public void updateItem(ItemFormDto itemFormDto){
         this.itemNm = itemFormDto.getItemNm();

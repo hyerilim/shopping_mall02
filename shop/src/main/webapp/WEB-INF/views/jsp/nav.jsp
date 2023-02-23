@@ -40,6 +40,8 @@
 					<!-- 로그인 안 한 익명일 경우 -->
 					<!-- isAnonymous() : 익명 사용자이면 true(로그인 안한 사용자도 익명으로 간주) -->
 					<sec:authorize access="isAnonymous()">
+						<li class="nav-item"><a class="nav-link active" href="/item">상품목록
+						</a></li>
 						<li class="nav-item"><a class="nav-link" href="/members/new">회원가입</a>
 						</li>
 						<li class="nav-item"><a class="nav-link"

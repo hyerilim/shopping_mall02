@@ -41,23 +41,26 @@ public class ItemController {
 							, Model model
 							, @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList) {
 		
+		// 상품 동록 시 필수 값이 없다면 다시 상품 등록 페이지로 전환
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("errorMessage", "내용을 입력해주세요.");
 			return "jsp/item/itemForm";
 		}
 		
+		// 상품 등록 시 첫 번째 이미지가 없다면 에러 메시지와 함께 상품 등록 페이지로 전환
 		if(itemImgFileList.get(0).isEmpty() && itemFormDto.getId() == null) {
 			model.addAttribute("errorMessage", "첫번째 이미지는 필수 입력 값 입니다.");
 			return "jsp/item/itemForm";
 		}
 		
+		// 상품저장 로직 호출, 메개 변수로 상품 정보와 상품 이미지 정보를 담고 있는 itemImgFileList를 넘겨줌
 		try {
 			itemService.saveItem(itemFormDto, itemImgFileList);
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "상품 등록 중 에러가 발생하였습니다.");
 		}
 		
-		return "redirect:/index";
+		return "redirect:/admin/items";
 	}
 	
 	@GetMapping(value="/admin/item/{itemId}")
@@ -94,7 +97,7 @@ public class ItemController {
 	            return "jsp/item/itemForm";
 	        }
 		
-		return "redirect:/index";
+		return "redirect:/admin/items";
 	}
 	
 	
