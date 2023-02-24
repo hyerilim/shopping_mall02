@@ -67,9 +67,11 @@ public class ItemController {
 	public String itemDtl(@PathVariable("itemId") Long itemId, Model model) {
 		
 		try {
+			// 조회한 상품 데이터를 모델에 담아서 뷰로 전달
 			ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
 			model.addAttribute("itemFormDto", itemFormDto);
 		} catch (EntityNotFoundException e) {
+			// 상품 엔티티가 존재하지 않을 경우 에러메시지를 담아서 삼품 등록 페이지로 이동
 			model.addAttribute("errorMessage", "존재하지 않는 상품 입니다.");
 			model.addAttribute("itemFormDto", new ItemFormDto());
 			return "jsp/item/itemForm";
@@ -91,7 +93,7 @@ public class ItemController {
 	        }
 
 	        try {
-	            itemService.updateItem(itemFormDto, itemImgFileList);
+	            itemService.updateItem(itemFormDto, itemImgFileList);		// 상품 수정 로직을 호출
 	        } catch (Exception e){
 	            model.addAttribute("errorMessage", e);
 	            return "jsp/item/itemForm";

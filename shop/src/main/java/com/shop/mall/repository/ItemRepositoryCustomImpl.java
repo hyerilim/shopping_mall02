@@ -21,18 +21,24 @@ import com.shop.mall.entity.QItemImg;
 
 import jakarta.persistence.EntityManager;
 
+// ItemRepositoryCustom 상속
 public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 	
+	//동적으로 쿼리를 생성하지 위해 JPAQueryFactory 클래스 사용
 	private JPAQueryFactory queryFactory;
 	
+	// JPAQueryFactory의 생성자로 EntityManager 객체를 넣어줌
 	public ItemRepositoryCustomImpl(EntityManager em) {
 		this.queryFactory = new JPAQueryFactory(em);
 	}
 	
+	// 상품 판매 상태 조건이 전체(null)일 경우는 null을 리턴, 결과값이 null이면 where절에서 해당 조건은 무시됨.
+	// 상품 판매 상태 조건이 null이 아니라 판매중 or 품절 상태라면 해당 조건의 상품만 조회
 	private BooleanExpression searchSellStatusEq(ItemSellStatus searchSellStatus) {
 		return searchSellStatus == null ? null : QItem.item.itemSellStatus.eq(searchSellStatus);
 	}
 	
+	// searchDateType의 값에 따라서 dateTime의 값을 이전 시간의 값으로 세팅 후 해당 시간 이후로 등록된 상품만 조회
 	private BooleanExpression regDtsAfter(String searchDateType) {
 		LocalDateTime dateTime = LocalDateTime.now();
 		
@@ -50,6 +56,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 		return QItem.item.regTime.after(dateTime);
 	}
 	
+	// searchBy의 값에 따라서 상품명에 검색어를 포함하고 있는 상품 또는 상품 생성자의 아이디에 검색어를 포함하고 있는 상품을 조회하도록 조건값을 반환
 	private BooleanExpression searchByLike(String searchBy, String searchQuery) {
 		
 		if(StringUtils.pathEquals("itemNm", searchBy)) {

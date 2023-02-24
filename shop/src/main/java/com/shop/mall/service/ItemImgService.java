@@ -48,8 +48,8 @@ public class ItemImgService {
     }
 
     public void updateItemImg(Long itemImgId, MultipartFile itemImgFile) throws Exception{
-        if(!itemImgFile.isEmpty()){
-            ItemImg savedItemImg = itemImgRepository.findById(itemImgId)
+        if(!itemImgFile.isEmpty()){			// 상품 이미지를 수정한 경우 상품 이미지를 업데이트
+            ItemImg savedItemImg = itemImgRepository.findById(itemImgId)		// 상품 이미지 아이디를 이용하여 기존에 저장했던 상품 이미지 엔티티를 조회
                     .orElseThrow(EntityNotFoundException::new);
 
             //기존 이미지 파일 삭제
@@ -59,8 +59,11 @@ public class ItemImgService {
             }
 
             String oriImgName = itemImgFile.getOriginalFilename();
-            String imgName = fileService.uploadFile(itemImgLocation, oriImgName, itemImgFile.getBytes());
+            String imgName = fileService.uploadFile(itemImgLocation, oriImgName, itemImgFile.getBytes());		//업데이트한 상품 이미지 파일을 업로드
             String imgUrl = "/images/item/" + imgName;
+            
+            // 변경된 상품 이미지 정보를 세팅, savedItemImg 엔티티는 현재 영속 상태이므로 데이터를 변경하는 것만으로 변경 감지 기능이 동작
+            // 엔티티가 영속 상태 일 때, 트랜잭션이 끝날 때 update 쿼리가 실행 
             savedItemImg.updateItemImg(oriImgName, imgName, imgUrl);
         }
     }
