@@ -34,8 +34,10 @@
 		<c:forEach var="item" items="${items.getContent()}" varStatus="status">
 		<tbody>
 		<tr>
-			<td>${item.id}</td>
-			<td>${item.itemNm}</td>
+			<td>${item.id}</td> 
+			<td>
+				<a href="/admin/admin/item/${item.id}">${item.itemNm}</a>
+			</td>
 			<td>${(item.itemSellStatus=="SELL") ? '판매중':'품절'}</td>
 			<td>${item.createdBy}</td>
 			<td>${item.regTime}</td>

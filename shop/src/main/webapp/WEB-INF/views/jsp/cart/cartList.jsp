@@ -62,8 +62,8 @@
                         <div class="check"><input type="checkbox" name="cartChkBox"  id="cartItemId" class="form-check-input" value="${cartItem.cartItemId}">&nbsp;</div>
                         <div class="img" ><img src="${cartItem.imgUrl}" width="130"></div>
                         <div class="pname">
-                        	<a style="color: inherit; text-decoration: none;" href="">
-                            ${cartItem.itemNm}
+                        	<a style="color: inherit; text-decoration: none;" href="/item/${cartItem.cartItemId}">
+                            ${cartItem.itemNm}    
                             </a>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
 
             <div id="goorder" class="">
                 <div class="buttongroup center-align cmd">
-                    <button href="/item" class="btn btn-primary btn-lg" onclick = "location.href = '/item' ">다른 상품 보러가기</button>
+                    <button class="btn btn-primary btn-lg" onclick = "location.href = '/item' ">다른 상품 보러가기</button>
                     <button type="button" class="btn btn-primary btn-lg" onclick="orders()">주문하기</button>
                 </div>
             </div>
@@ -109,6 +109,9 @@
 <script type="text/javascript">
       
 	$(document).ready(function(){
+		
+		alert("주문 상품을 체크해주세요.");
+		
       $("input[name=cartChkBox]").change( function(){
           getOrderTotalPrice();
       });

@@ -16,31 +16,50 @@
 
 <jsp:include page="../nav.jsp"></jsp:include>
 
-
 <c:forEach var="order" items="${orders.getContent()}" varStatus="status">
-<div class="pt-3">
-	날짜 ${order.orderDate} 주문 
-
+<div class="pt-3">	
+	<table class="table">
+	<tr>
+		<td>주문 날짜</td>
+		<td>상품 사진</td>
+		<td>상품명</td>
+		<td>상품 가격</td>
+		<td>상품 개수</td>
+		<td>결제 상태</td>
+		<td>주문 취소</td>
+	</tr>
+	<tr>
+		<td>${order.orderDate}</td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>		
+	</tr>
 	<c:forEach var="orderItem" items="${order.orderItemDtoList}" varStatus="status">
-		<img src="${orderItem.imgUrl}">
-		${orderItem.itemNm} 
-		${orderItem.orderPrice}원 
-		${orderItem.count}개 
-	 </c:forEach>
-	
-	<span>결제완료</span>
-	
-	   <c:if test="${order.orderStatus == 'ORDER'}">
-	   <button type="button" class="btn btn-outline-secondary" value="${order.orderId}" onclick="cancelOrder(this.value)">주문취소</button>
-	   </c:if>
-	   <c:if test="${order.orderStatus == 'CANCEL'}">
+	<tr>
+		<td></td>
+		<td><img style="width:200px" src="${orderItem.imgUrl}"></td>
+		<td>${orderItem.itemNm}</td>
+		<td>${orderItem.orderPrice}</td>
+		<td>${orderItem.count}</td>	
+		<td><span>결제완료</span></td>
+		<td>
+		
+		<c:if test="${order.orderStatus == 'ORDER'}">
+	   	<button type="button" class="btn btn-outline-secondary" value="${order.orderId}" onclick="cancelOrder(this.value)">주문취소</button>
+	   	</c:if>
+	   	<c:if test="${order.orderStatus == 'CANCEL'}">
 	        (취소 완료)
 	   </c:if>
-	
+		
+		</td> 
+	</tr>
+	</c:forEach>
+</table>	
 </div>
 </c:forEach>
-
-${orders}
 
 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.6.3.js"></script>

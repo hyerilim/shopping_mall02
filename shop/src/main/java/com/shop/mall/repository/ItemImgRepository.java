@@ -7,7 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.shop.mall.entity.ItemImg;
 
 public interface ItemImgRepository extends JpaRepository<ItemImg, Long> {
-
+	
+	List<ItemImg> findByItem(Long itemId);
+	
 	List<ItemImg> findByItemIdOrderByIdAsc(Long itemId);
 	
 	// 상품의 대표이미지 보여주기

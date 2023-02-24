@@ -33,25 +33,30 @@ public class ItemService {
 	public Long saveItem(ItemFormDto itemFormDto
 							, List<MultipartFile> itemImgFileList) throws Exception {
 		
-		// 상품 등록
+	// 상품 등록
+		// 상품 등록 폼으로부터 입력 받은 데이터를 이용하여 item 객체를 생성
 		Item item = itemFormDto.createItem();
+		// 상품 데이터 저장
 		itemRepository.save(item);
 		
-		// 이미지 등록
+	// 이미지 등록
 		for(int i=0; i<itemImgFileList.size(); i++) {
 			ItemImg itemImg = new ItemImg();
 			itemImg.setItem(item);
+			
+			// 첫번째 이미지일 경우 대표 상품 이미지 여부 값을 "Y"로 세팅, 나머지 상품 이미지는 "N"으로 설정
 			if(i==0)
 				itemImg.setRepimgYn("Y");
 			else
 				itemImg.setRepimgYn("N");
+			// 상품의 이미지 정보를 저장
 			itemImgService.saveItemImg(itemImg, itemImgFileList.get(i));
 		}
 		return item.getId();
 	}
 	
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly=true)		// 상품 데이터를 읽어오는 트랜젝션을 읽기 전용을 설정하면 JPA가 더티체킹(변경감지)을 수행하지 않아서 성능이 향상
 	public ItemFormDto getItemDtl(Long itemId) {
 		
 		List<ItemImg> itemImgList = itemImgRepository.findByItemIdOrderByIdAsc(itemId);
@@ -96,5 +101,11 @@ public class ItemService {
 	public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
 		return itemRepository.getMainItemPage(itemSearchDto, pageable);
 	}
+
+	
+    public void ItemDelete(Item item) {
+        this.itemRepository.delete(item);
+    }
+	
 	
 }

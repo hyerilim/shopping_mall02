@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+			
             calculateToalPrice();
 
             $("#count").change( function(){
