@@ -54,20 +54,22 @@
 			<br><br> 
 			
 			<a href="/oauth2/authorization/kakao">
-				<img width="300" height="47.6" alt="카카오" src="${pageContext.request.contextPath}/resources/img/kakao_login_medium_narrow.png">
+				<img width="300" height="47.6" alt="kakao" src="${pageContext.request.contextPath}/resources/img/kakao_login_btn.png">
 			</a>
+			
+			<br><br>
+			
+			<a href="/oauth2/authorization/naver"><img src="${pageContext.request.contextPath}/resources/img/naver_login_btn.png" alt="naver" width="300" height="47.6" ></a>
+			
 			
 			<br><br>
 			
 			<a href="/oauth2/authorization/google">
-				<img src="https://pngimage.net/wp-content/uploads/2018/06/google-login-button-png-1.png"alt="google" width="300" height="47.6" >
+				<img src="${pageContext.request.contextPath}/resources/img/google_login_btn.png" alt="google" width="300" height="47.6" >
 			</a>
 			
-			<br><br>
 			
-			<a href="/oauth2/authorization/naver">네이버 로그인</a>
-			
-			<p class="mt-5 mb-3 text-muted">&copy; 2023</p>
+			<p class="mt-5 mb-3 text-muted">&copy; 2023 "할 수 있다"</p>
 			<input type="hidden" name="${_csrf.parameterName}"
 				value="${_csrf.token}" />
 		</form>

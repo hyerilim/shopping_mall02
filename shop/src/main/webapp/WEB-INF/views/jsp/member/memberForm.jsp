@@ -80,7 +80,7 @@
 						<input class="mail_input" name="email"
 							onkeydown="if(event.keyCode === 32 ){event.returnValue=false;}">
 					</div>
-					<span class="email_input_re_1">사용 가능한 이메일입니다.</span> <span
+					 <span
 						class="email_input_re_2">이메일이 이미 존재합니다.</span> <span
 						class="final_mail_ck">이메일을 입력해주세요.</span> <span
 						class="mail_input_box_warn"></span>
@@ -103,7 +103,7 @@
 					<div class="address_name">주소</div>
 					<div class="address_input_1_wrap">
 						<div class="address_input_1_box">
-							<input class="address_input_1" name="addressNo" readonly>
+							<input class="address_input_1" name="addressNo" readonly placeholder="우편번호">
 						</div>
 						<!-- 주소찾기 버튼 -->
 						<div class="address_button" onclick="execution_daum_address()">
@@ -114,14 +114,14 @@
 
 					<div class="address_input_2_wrap">
 						<div class="address_input_2_box">
-							<input class="address_input_2" name="address" readonly>
+							<input class="address_input_2" name="address" readonly placeholder="도로명 주소">
 						</div>
 					</div>
 
 					<div class="address_input_3_wrap">
 						<div class="address_input_3_box">
-							<input class="address_input_3" name="addressDetail" readonly
-								onkeydown="if(event.keyCode === 32 ){event.returnValue=false;}">
+							<input class="address_input_3" name="addressDetail"
+								onkeydown="if(event.keyCode === 32 ){event.returnValue=false;}" placeholder="상세주소를 입력해주세요.">
 						</div>
 					</div>
 					<span class="final_addr_ck">주소를 입력해주세요.</span>
@@ -158,12 +158,8 @@
 		var mailnumcorCheck = false; // 이메일 인증번호 일치 확인
 		var addressCheck = false // 주소
 
-		$(document).ready(
-				function() {
-					//회원가입 버튼(회원가입 기능 작동)
-					$(".join_button")
-							.click(
-									function() {
+		$(document).ready(function() {//회원가입 버튼(회원가입 기능 작동)
+			$(".join_button").click(function() {
 
 										/* 입력값 변수 */
 										var id = $('.id_input').val().trim(); // id 입력란
@@ -284,10 +280,8 @@
 				});
 
 		//아이디 중복검사
-		$('.id_input')
-				.on(
-						"propertychange change keyup paste input",
-						function() {
+		$('.id_input').on("propertychange change keyup paste input",function() {
+							
 							/* console.log("keyup 테스트"); */
 
 							var loginId = $('.id_input').val().trim(); // .id_input에 입력되는 값
@@ -307,7 +301,7 @@
 
 							if (!loginIdFormCheck(loginId)) {
 								warnMsg
-										.html("영문자로 시작하는 영문자 또는 숫자 6~20자를 입력해주세요.");
+										.html("영문자(소문자)로 시작하는 영문자(소문자) 또는 숫자 6~20자를 입력해주세요.");
 								warnMsg.css("display", "inline-block");
 								warnMsg.css("color", "red");
 								$('.final_id_ck').css("display", "none");
@@ -358,10 +352,7 @@
 						}); // function 종료
 
 		// 이메일 중복검사
-		$('.mail_input')
-				.on(
-						"propertychange change keyup paste input",
-						function() {
+		$('.mail_input').on("propertychange change keyup paste input", function() {
 
 							/* console.log("keyup 테스트");	 */
 
@@ -499,8 +490,7 @@
 
 		/* 인증번호 비교 */
 		// 인증번호 비교를 위한 메서드 추가
-		$(".mail_check_input").on("propertychange change keyup paste input",
-				function() {
+		$(".mail_check_input").on("propertychange change keyup paste input", function() {
 
 					// 사용자가 입력하는 인증번호
 					var inputCode = $(".mail_check_input").val().trim(); // 입력코드
@@ -591,8 +581,7 @@
 		}
 
 		/* 비밀번호 확인 일치 유효성 검사 */
-		$('.pwck_input').on("propertychange change keyup paste input",
-				function() {
+		$('.pwck_input').on("propertychange change keyup paste input", function() {
 
 					/* 변수를 선언하여 비밀번호 항목과 비밀번호 확인 항목란의 입력값으로 초기화합니다. 
 					추가적으로 입력이 될 때 '비밀번호 확인을 입력해주세요'(final_pwck_ck)경고글을 사라지도록 하는 코드를 추가합니다. */
@@ -635,6 +624,7 @@
 
 				});
 
+		// 비밀번호 유효성 검사
 		$('.pw_input').on("propertychange change keyup paste input", function() {
 
 			var pw = $('.pw_input').val().trim();

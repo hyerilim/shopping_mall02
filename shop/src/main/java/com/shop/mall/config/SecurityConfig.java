@@ -144,9 +144,12 @@ public class SecurityConfig {
 		return http.build();
 	}
 
+	
 	// 비밀번호를 암호화하여 저장합니다.
 	@Bean
 	public static PasswordEncoder passwordEncoder() {
+		
+		
 		return new BCryptPasswordEncoder();
 	}
 
