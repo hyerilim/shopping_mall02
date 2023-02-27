@@ -14,7 +14,9 @@ public class MainController {
 	public String mainPage() {
 		return "jsp/main/home";
 	}
-
+	
+	
+	
 //	@GetMapping("/")
 //	public String mainPage(@AuthenticationPrincipal PrincipalDetails pricipal) {
 //		

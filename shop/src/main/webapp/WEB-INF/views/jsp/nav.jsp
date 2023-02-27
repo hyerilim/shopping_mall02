@@ -47,7 +47,10 @@
 						<li class="nav-item"><a class="nav-link"
 							href="/members/login">로그인</a></li>
 					</sec:authorize>
-
+					
+						<li class="nav-item">
+							<a class="nav-link" href="/banner/list">배너관리</a>
+						</li>
 
 					<!-- 로그인(인증된) 사용자인 경우 -->
 					<!-- isAuthenticated() : 인증된 사용자면 true -->

@@ -16,13 +16,18 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		
+		cookiedata = document.cookie; 
+        if(cookiedata.indexOf("close=Y")<0){ 
+			window.open("banner","a","width=400, height=300, left=100, top=50");
+        }
+        	
 		<!-- 관리자로 로그인하면 관리자 페이지로 이동 -->
 		<sec:authorize access="hasAnyAuthority('ROLE_ADMIN')">
 			location.href="/admin/home";
 		</sec:authorize>
 		
 	});
+	
 	
 </script>
 
@@ -32,6 +37,6 @@
 
 	<jsp:include page="../nav.jsp"></jsp:include>
 	<h2>메인페이지</h2>
-	
+
 </body>
 </html>
