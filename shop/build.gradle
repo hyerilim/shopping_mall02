@@ -96,6 +96,14 @@ dependencies {
 	// 이 라이브러리가 등록된 주소를 낚아챈다
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
+	// https://mvnrepository.com/artifact/commons-io/commons-io
+	// 대용량 파일 처리 
+	implementation 'commons-io:commons-io:2.11.0'
+	
+	// https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
+	// multipart등을 사용할수 있음
+	implementation 'commons-fileupload:commons-fileupload:1.5'
+	
 	
 
 }
