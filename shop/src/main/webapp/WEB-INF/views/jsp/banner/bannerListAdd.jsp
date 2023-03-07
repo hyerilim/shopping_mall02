@@ -79,6 +79,8 @@
 					</form>
 				</c:when>
 				<c:otherwise>
+					<h2>배너 상세보기</h2>
+					
 					<table border="1">
 						<tr>
 							<th>배너명</th>
@@ -125,6 +127,8 @@
 			</c:choose>
 		</c:when>
 		<c:otherwise>
+			<h2>배너 수정하기</h2>
+			
 			<form action="/banner/update" method="post">
 				<input type="hidden" name="${_csrf.parameterName}"
 					value="${_csrf.token}" />
@@ -183,6 +187,7 @@
 			location.href = "/banner/update/" + "${banner.bannerId}";
 		}
 
+		// 배너 종류 값
 		var bannerKindValue = "${banner.bannerKind}";
 		console.log("bannerKindValue : " + bannerKindValue);
 
@@ -195,6 +200,7 @@
 
 		});
 		
+		// 배너 종류 수정 값
 		var bannerUpdateKindValue = "${bannerUpdate.bannerKind}";
 		console.log("bannerKindValue : " + bannerKindValue);
 
@@ -209,7 +215,7 @@
 		
 	</script>
 	
-	<!-- 파일업로드 -->
+	<!-- 이미지 파일 업로드 -->
 	<script type="text/javascript">
 	
 	// 1.input type="file" multiple="multiple"이 동작할 때(document ready에서 실행), 
@@ -232,7 +238,7 @@
 	var fileCount = 0;
 	
 	// 해당 숫자를 수정하여 전체 업로드 갯수를 정한다.
-	var totalCount = 5;
+	var totalCount = 4;
 	
 	// 파일 고유넘버
 	var fileNum = 0;
@@ -260,13 +266,40 @@
 		var fileArray = Array.from(files);
 		console.log(fileArray);
 		
+		// 이미지 파일 값
+		var imgFile = $('#input_file').val();
+		
+		// 이미지 파일 정규식
+		var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+		
+		// 이미지 파일 용량 5MB
+		var maxSize = 5 * 1024 * 1024;
+		
+		// 선택한 파일의 사이즈값을 넣기 위한 변수
+		var fileSize;
 		
 		// 파일 개수 확인 및 제한
 		if(fileCount + filesArr.length > totalCount){
-			alert('파일은 최대 '+totalCount+' 개까지 업로드할 수 있습니다.');
-			return;
+			alert('최대 '+totalCount+' 개까지 업로드 가능합니다.');
+			return false;
 		} else {
 			fileCount = fileCount + filesArr.length;
+		}
+		
+		// 이미지 파일 유효성 검사
+		if(imgFile != "" && imgFile != null ){
+			fileSize = document.getElementById("input_file").files[0].size;
+			
+			// 이미지 파일만 업로드 가능
+			if(!imgFile.match(fileForm)){
+				alert("이미지 파일만 업로드 가능합니다.");
+				return false;
+			
+			// 최대 5MB까지 업로드 가능
+			} else if(fileSize>maxSize){
+				alert("최대 5MB 파일 업로드 가능합니다.");
+				return false;
+			}
 		}
 		
 		// 각각의 파일 배열담기 및 기타
@@ -331,7 +364,7 @@
 		
 		// alert(content_files.length);
 		// alert(content_files[0].getName());
-		
+			
 		for(var i=0; i<content_files.length; i++){
 			
 			// 삭제 안한것만 담기
