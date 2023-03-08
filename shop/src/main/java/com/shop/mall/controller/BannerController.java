@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -134,19 +135,24 @@ public class BannerController {
 		log.info("배너 수정 페이지");
 		
 		BannerDto bannerDto = bannerService.findById(id);
+		
 		model.addAttribute("bannerUpdate" , bannerDto);
+
 		return "jsp/banner/bannerListAdd";
 	}
 	
 	// 배너 수정
 	@PostMapping("/banner/update")
-	public String bannerUpdate(@ModelAttribute BannerDto bannerDto) {
+	@ResponseBody
+	public Map<String, Object> bannerUpdate(@RequestBody Map<String, Object> params) {
 		
 		log.info("배너 수정");
 		
-		bannerService.bannerUpdate(bannerDto);
+		log.info("params : "+params);
 		
-		return "redirect:/banner/list";
+		bannerService.bannerUpdate(params);
+		
+		return params;
 	}
 	
 }

@@ -70,6 +70,7 @@ public class BannerEntity extends BaseEntity {
 		bannerEntity.setBannerKind(bannerDto.getBannerKind());
 		bannerEntity.setBannerStartTime(bannerDto.getBannerStartTime());
 		bannerEntity.setBannerEndTime(bannerDto.getBannerEndTime());
+		bannerEntity.setFileAttached(1); // 파일 있음.
 		
 		return bannerEntity;
 	}

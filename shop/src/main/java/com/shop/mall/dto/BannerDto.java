@@ -32,8 +32,9 @@ public class BannerDto {
 	
 	// 스프링에서 제공하는 인터페이스 MultipartFile
 	// private List<MultipartFile> bannerImages; // 이미지 파일, jsp -> Controller 로 넘어갈 때 파일을 담는 용도
-	private List<String> originalFileName; // 원본 파일 이름
-	private List<String> storedFileName; // 서버 저장용 파일 이름
+	private List<String> originalFileNameList; // 원본 파일 이름
+	private List<String> storedFileNameList; // 서버 저장용 파일 이름
+	private List<Long> fileIdList; // 서버 저장용 파일 이름
 	private int fileAttached; // 파일 첨부 여부(첨부 1, 미첨부 0)
 	
 	// 배너 목록
@@ -72,14 +73,16 @@ public class BannerDto {
 		} else {
 			List<String> originalFileNameList = new ArrayList<>();
 			List<String> storedFileNameList = new ArrayList<>();
+			List<Long> fileIdList = new ArrayList<>();
 			bannerDto.setFileAttached(bannerEntity.getFileAttached()); // 1
 			for(BannerFileEntity bannerFileEntity : bannerEntity.getBannerFileEntities()) {
+				fileIdList.add(bannerFileEntity.getId());
 				originalFileNameList.add(bannerFileEntity.getOriginalFileName());
 				storedFileNameList.add(bannerFileEntity.getStoredFileName());
 			}
-			bannerDto.setOriginalFileName(originalFileNameList);
-			bannerDto.setStoredFileName(storedFileNameList);
-			
+			bannerDto.setFileIdList(fileIdList);
+			bannerDto.setOriginalFileNameList(originalFileNameList);
+			bannerDto.setStoredFileNameList(storedFileNameList);
 		}
 		return bannerDto;
 	}
@@ -93,7 +96,7 @@ public class BannerDto {
 		this.bannerEndTime = bannerEndTime;
 	}
 
-	// 배너 값 저장
+	// 배너 등록(이미지 파일 제외)
 	public static BannerDto toBannerParams(Map<String, Object> params) {
 		BannerDto bannerDto = new BannerDto();
 		bannerDto.setBannerName(params.get("bannerName").toString());
@@ -102,10 +105,28 @@ public class BannerDto {
 		String bannerStartTime = params.get("bannerStartTime").toString();
 		String bannerEndTime = params.get("bannerEndTime").toString();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-		LocalDateTime bannerStartdateTime = LocalDateTime.parse(bannerStartTime, formatter);
-		LocalDateTime bannerEnddateTime = LocalDateTime.parse(bannerEndTime, formatter);
-		bannerDto.setBannerStartTime(bannerStartdateTime);
-		bannerDto.setBannerEndTime(bannerEnddateTime);
+		LocalDateTime bannerStartDateTime = LocalDateTime.parse(bannerStartTime, formatter);
+		LocalDateTime bannerEndDateTime = LocalDateTime.parse(bannerEndTime, formatter);
+		bannerDto.setBannerStartTime(bannerStartDateTime);
+		bannerDto.setBannerEndTime(bannerEndDateTime);
+		return bannerDto;
+	}
+
+	// 배너 수정
+	public static BannerDto toUpdateBannerParams(Map<String, Object> params) {
+		BannerDto bannerDto = new BannerDto();
+		Long bannerId = Long.parseLong(params.get("bannerId").toString());
+		bannerDto.setBannerId(bannerId);
+		bannerDto.setBannerName(params.get("bannerName").toString());
+		bannerDto.setBannerKind(params.get("bannerKind").toString());
+		
+		String bannerStartTime = params.get("bannerStartTime").toString();
+		String bannerEndTime = params.get("bannerEndTime").toString();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+		LocalDateTime bannerStartDateTime = LocalDateTime.parse(bannerStartTime, formatter);
+		LocalDateTime bannerEndDateTime = LocalDateTime.parse(bannerEndTime, formatter);
+		bannerDto.setBannerStartTime(bannerStartDateTime);
+		bannerDto.setBannerEndTime(bannerEndDateTime);
 		return bannerDto;
 	}
 

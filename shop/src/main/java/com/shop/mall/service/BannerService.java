@@ -187,9 +187,75 @@ public class BannerService {
 	}
 
 	// 배너 수정
-	public void bannerUpdate(BannerDto bannerDto) {
-		BannerEntity updateBannerEntity = BannerEntity.toUpdateBannerEntity(bannerDto);
-		bannerRepository.save(updateBannerEntity);
+	public void bannerUpdate(Map<String, Object> params) {
+		
+		log.info("배너 수정 서비스");
+		
+		// 1.Dto에 params(수정데이터) 값 담기
+		BannerDto bannerDto = BannerDto.toUpdateBannerParams(params);
+		
+		// 2.기존에 있던 이미지 삭제할 것인지 구분
+		if(params.get("deleteFileIdxs") != null && params.get("deleteFileIdxs") != "") {
+			String deleteFileIdxs = (String) params.get("deleteFileIdxs"); 
+			String[] fileIdxsArray = deleteFileIdxs.split(",");
+			
+			// 해당 시퀀스(기존에 있던 파일 아이디) 삭제처리
+			for(int i=0; i<fileIdxsArray.length; i++) {
+				
+				// 파일 삭제 배열에 들어있는 값들 변환해서 하나씩 꺼내기
+				Long fileId = Long.parseLong(fileIdxsArray[i]);
+				
+				log.info("fileId : "+fileId);
+				
+				// 해당하는 파일 아이디를 통해서 DB 불러오기
+				Optional<BannerFileEntity> bannerFileEntityOptional = bannerFileRepository.findById(fileId);
+				
+				// DB에 저장된 이미지 파일의 이름
+				String storedFileName = bannerFileEntityOptional.get().getStoredFileName();
+				
+				// 저장된 실제 이미지 파일 삭제 기능
+				String savedPath = "C:/SpringBootShopJPA/shop/src/main/resources/static/images/banner/" + storedFileName;
+				File deleteFile = new File(savedPath);
+				
+				// 파일이 있는지 확인 후 삭제
+				if(deleteFile.exists()) {
+					deleteFile.delete();
+				}
+				
+				// 실제 이미지 파일 삭제 후 DB 삭제
+				bannerFileRepository.deleteById(fileId);
+				
+			}
+		}
+		
+		// 3.새로운 추가 이미지 파일이 있는지 확인
+		if(params.get("fileIdxs") != null) {
+			
+			// 4.배너 정보 수정
+			BannerEntity updateBannerEntity = BannerEntity.toUpdateBannerEntity(bannerDto); 
+			Long bannerId = bannerRepository.save(updateBannerEntity).getId();
+			BannerEntity bannerEntity = bannerRepository.findById(bannerId).get();
+			
+			// 5.파일 아이디값 배열에 담기
+			String fileIdxs = ((String) params.get("fileIdxs")).replace("[", "").replace("]", "");
+			String[] fileIdxArray = fileIdxs.split(",");
+			
+			// 6.해당하는 파일 아이디 값이 있으면 배너 아이디값 넣기
+	        for (int i=0; i<fileIdxArray.length; i++) {
+	        	// 여백 때문에 에러 발생해서 추가
+	        	String fileArrayId = fileIdxArray[i].replaceAll(" ","");
+	        	Long banerFileId = Long.parseLong(fileArrayId);
+	        	Optional<BannerFileEntity> fileId = bannerFileRepository.findById(banerFileId);
+	        	BannerFileEntity bannerFileEntityGet = fileId.get();
+	        	BannerFileEntity bannerFileEntity=BannerFileEntity.toBannerFileUploadEntity(bannerEntity, bannerFileEntityGet);
+	        	bannerFileRepository.save(bannerFileEntity);
+	        }
+	    
+	    // 7.저장된 이미지 파일이 없으면 배너 정보만 수정
+		} else {
+			BannerEntity updateBannerEntity = BannerEntity.toUpdateBannerEntity(bannerDto); 
+			bannerRepository.save(updateBannerEntity);
+		}
 
 	}
 
@@ -228,12 +294,13 @@ public class BannerService {
 
 			for (MultipartFile bannerFile : multipartFiles) {
 	
-				// List<MultipartFile> bannerImages = bannerDto.getBannerImages(); // 1
+				// 실제 이미지 파일 저장
 				String originalFilename = bannerFile.getOriginalFilename(); // 2 
 				String storedFileName = System.currentTimeMillis() + "_" + originalFilename; // 3 
 				String savePath = "C:/SpringBootShopJPA/shop/src/main/resources/static/images/banner/" + storedFileName; // 4
 				bannerFile.transferTo(new File(savePath)); // 5
 	
+				// 파일 저장 후 DB에 저장
 				BannerFileEntity bannerFileEntity = BannerFileEntity.toBannerFileUploadEntity(originalFilename, storedFileName);
 				Long bannerFileId = bannerFileRepository.save(bannerFileEntity).getId();
 				
