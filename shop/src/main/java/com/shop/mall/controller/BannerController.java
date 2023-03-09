@@ -48,7 +48,7 @@ public class BannerController {
 		Page<BannerDto> bannerList = bannerService. bannerListPaging(pageable);
 		
 		// 하단 페이지 번호 갯수
-		int blockLimit =3;
+		int blockLimit =5;
 		int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1 ) * blockLimit + 1;
 		int endPage = ((startPage + blockLimit - 1 ) < bannerList.getTotalPages()) ? startPage + blockLimit - 1 : bannerList.getTotalPages();
 		
@@ -154,5 +154,20 @@ public class BannerController {
 		
 		return params;
 	}
+	
+	// 배너 선택삭제
+	@PostMapping("/banner/delete")
+	@ResponseBody
+	public Map<String, Object> bannerCheckDelete(@RequestParam(value="bannerCheckArr[]") List<String> bannerCheckArr) throws Exception{
+		
+		log.info("배너 선택삭제");
+		
+		System.out.println(bannerCheckArr);
+		
+		return bannerService.bannerCheckDelete(bannerCheckArr);
+		
+	}
+	
+	
 	
 }

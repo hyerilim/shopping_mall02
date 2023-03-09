@@ -2,6 +2,7 @@ package com.shop.mall.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.shop.mall.constant.BannerStatus;
 import com.shop.mall.dto.BannerDto;
 import com.shop.mall.entity.BannerEntity;
 import com.shop.mall.entity.BannerFileEntity;
@@ -54,7 +56,7 @@ public class BannerService {
 			Long bannerId = bannerRepository.save(saveBannerEntity).getId();
 			BannerEntity bannerEntity = bannerRepository.findById(bannerId).get();
 			
-			//파일 아이디값 배열에 담기
+			// 파일 아이디값 배열에 담기
 			String fileIdxs = ((String) params.get("fileIdxs")).replace("[", "").replace("]", "");
 			String[] fileIdxArray = fileIdxs.split(",");
 			
@@ -164,15 +166,15 @@ public class BannerService {
 	}
 
 	// 배너 목록
-	public List<BannerDto> findAll() {
-		
-		List<BannerEntity> bannerEntityList = bannerRepository.findAll();
-		List<BannerDto> bannerDtoList = new ArrayList<>();
-		for (BannerEntity bannerEntity : bannerEntityList) {
-			bannerDtoList.add(BannerDto.toListBannerDto(bannerEntity));
-		}
-		return bannerDtoList;
-	}
+//	public List<BannerDto> findAll() {
+//		
+//		List<BannerEntity> bannerEntityList = bannerRepository.findAll();
+//		List<BannerDto> bannerDtoList = new ArrayList<>();
+//		for (BannerEntity bannerEntity : bannerEntityList) {
+//			bannerDtoList.add(BannerDto.toListBannerDto(bannerEntity));
+//		}
+//		return bannerDtoList;
+//	}
 
 	// 배너 상세조회
 	public BannerDto findById(Long id) {
@@ -270,6 +272,40 @@ public class BannerService {
 		// map 페이지 객체 제공
 		Page<BannerDto> bannerDtos = bannerEntities.map(banner -> new BannerDto(banner.getId(), banner.getBannerName(),
 				banner.getBannerKind(), banner.getBannerStartTime(), banner.getBannerEndTime()));
+		
+//		int pageStartListSize = page*pageLimit;  
+//		int pageEndListSize = pageable.getPageNumber()*pageLimit;
+//		
+//		log.info("첫번째 리스트 : "+pageStartListSize);
+//		log.info("마지막 리스트 : "+pageEndListSize);
+//		System.out.println(bannerDtos.getTotalElements());
+//		System.out.println(bannerDtos.getSize());
+//		if(bannerDtos.getTotalElements()>0) {
+//			
+//			for(int i=0; i<bannerDtos.getTotalElements(); i++) {
+//				
+//				log.info("진행상태확인");
+//				LocalDateTime bannerStartTime = bannerDtos.getContent().get(i).getBannerStartTime();
+//				LocalDateTime bannerEndTime = bannerDtos.getContent().get(i).getBannerEndTime();
+//				LocalDateTime currentTime = LocalDateTime.now();
+//				System.out.println(bannerStartTime);
+//				System.out.println(bannerEndTime);
+//				System.out.println(currentTime);
+//				
+//				if(currentTime.isBefore(bannerStartTime)) {
+//					bannerDtos.getContent().get(i).setBannerStatus(BannerStatus.진행전.toString());
+//				} else if(currentTime.isAfter(bannerStartTime) && currentTime.isBefore(bannerEndTime)) {
+//					bannerDtos.getContent().get(i).setBannerStatus(BannerStatus.진행중.toString());
+//				} else if(currentTime.isAfter(bannerEndTime)) {
+//					bannerDtos.getContent().get(i).setBannerStatus(BannerStatus.종료.toString());
+//				}
+//	
+//				
+//			
+//				
+//			}
+//		}
+		
 		return bannerDtos;
 	}
 
@@ -316,4 +352,65 @@ public class BannerService {
 		
 	}
 
+	// 배너 선택삭제
+	public Map<String, Object> bannerCheckDelete(List<String> bannerCheckArr) {
+		
+		log.info("배너 선택삭제");
+		
+		log.info("bannerCheckArr : "+bannerCheckArr);
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		// 배너 아이디 담을 변수 선언
+		Long bannerId = (long) 0;
+		
+		// 배너 파일 아이디 담을 변수 선언
+		Long bannerFileId = (long) 0;
+		
+		if(bannerCheckArr != null && bannerCheckArr.size()>0) {
+			
+			for(String i : bannerCheckArr) {
+				
+				// 선택한 배너 아이디 값
+				bannerId = Long.parseLong(i);
+				
+				BannerEntity bannerEntity = bannerRepository.findById(bannerId).get();
+				
+				// 먼저 해당하는 이미지 파일 삭제
+				for(int j=0; j<bannerEntity.getBannerFileEntities().size(); j++) {
+					
+					bannerFileId=bannerEntity.getBannerFileEntities().get(j).getId();
+					System.out.println("bannerFileId : "+bannerFileId);
+					
+					// 실제 이미지 삭제
+					// 해당하는 파일 아이디를 통해서 DB 불러오기
+					Optional<BannerFileEntity> bannerFileEntityOptional = bannerFileRepository.findById(bannerFileId);
+					
+					// DB에 저장된 이미지 파일의 이름
+					String storedFileName = bannerFileEntityOptional.get().getStoredFileName();
+					
+					// 저장된 실제 이미지 파일 삭제 기능
+					String savedPath = "C:/SpringBootShopJPA/shop/src/main/resources/static/images/banner/" + storedFileName;
+					File deleteFile = new File(savedPath);
+					
+					// 파일이 있는지 확인 후 삭제
+					if(deleteFile.exists()) {
+						deleteFile.delete();
+					}
+					
+					// 이미지 파일 삭제
+					bannerFileRepository.deleteById(bannerFileId);
+				}
+				
+				// 배너 삭제
+				bannerRepository.deleteById(bannerId);
+			}
+			
+			result.put("result", "bannerCheckDelete");
+		
+		}
+		
+		return result;
+
+	}
 }

@@ -28,7 +28,7 @@ public class BannerDto {
 	private String bannerKind; // 구분
 	private LocalDateTime bannerStartTime; // 시작날
 	private LocalDateTime bannerEndTime; // 마지막날
-	private String bannerStatus; // 상태
+	private String bannerStatus; // 진행상태
 	
 	// 스프링에서 제공하는 인터페이스 MultipartFile
 	// private List<MultipartFile> bannerImages; // 이미지 파일, jsp -> Controller 로 넘어갈 때 파일을 담는 용도
@@ -38,27 +38,27 @@ public class BannerDto {
 	private int fileAttached; // 파일 첨부 여부(첨부 1, 미첨부 0)
 	
 	// 배너 목록
-	public static BannerDto toListBannerDto(BannerEntity bannerEntity) {
-		BannerDto bannerDto = new BannerDto();
-		bannerDto.setBannerId(bannerEntity.getId());
-		bannerDto.setBannerName(bannerEntity.getBannerName());
-		bannerDto.setBannerKind(bannerEntity.getBannerKind());
-		
-		// 시작일보다 크고 마지막일보다 작으면 진행중 그외에는 종료
-		Date today = new Date();
-		LocalDateTime localDateTime = today.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-		
-		if( bannerEntity.getBannerStartTime().compareTo(localDateTime) == -1 && bannerEntity.getBannerEndTime().compareTo(localDateTime)==1) {
-			log.info("getBannerStartTime :"+bannerEntity.getBannerStartTime());
-			log.info("getBannerEndTime :"+bannerEntity.getBannerEndTime());
-			log.info("localDateTime :"+localDateTime);
-			bannerDto.setBannerStatus(BannerStatus.진행중.toString());
-		} else {
-			bannerDto.setBannerStatus(BannerStatus.종료.toString());
-		}
-		
-		return bannerDto;
-	}
+//	public static BannerDto toListBannerDto(BannerEntity bannerEntity) {
+//		BannerDto bannerDto = new BannerDto();
+//		bannerDto.setBannerId(bannerEntity.getId());
+//		bannerDto.setBannerName(bannerEntity.getBannerName());
+//		bannerDto.setBannerKind(bannerEntity.getBannerKind());
+//		
+//		// 시작일보다 크고 마지막일보다 작으면 진행중 그외에는 종료
+//		Date today = new Date();
+//		LocalDateTime localDateTime = today.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+//		
+//		if( bannerEntity.getBannerStartTime().compareTo(localDateTime) == -1 && bannerEntity.getBannerEndTime().compareTo(localDateTime)==1) {
+//			log.info("getBannerStartTime :"+bannerEntity.getBannerStartTime());
+//			log.info("getBannerEndTime :"+bannerEntity.getBannerEndTime());
+//			log.info("localDateTime :"+localDateTime);
+//			bannerDto.setBannerStatus(BannerStatus.진행중.toString());
+//		} else {
+//			bannerDto.setBannerStatus(BannerStatus.종료.toString());
+//		}
+//		
+//		return bannerDto;
+//	}
 	
 	// 배너 상세보기
 	public static BannerDto toDetailBannerDto(BannerEntity bannerEntity) {

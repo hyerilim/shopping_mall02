@@ -1,3 +1,4 @@
+<%@page import="java.time.LocalDateTime"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -5,9 +6,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta id="_csrf" name="_csrf" content="${_csrf.token}">
+<meta id="_csrf_header" name="_csrf_header"
+	content="${_csrf.headerName}">
 <title>배너 목록</title>
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+	integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+	crossorigin="anonymous"></script>
 </head>
 <body>
 <jsp:include page="../nav.jsp"></jsp:include>
@@ -15,6 +22,7 @@
 	<table border="1" width="90%">
 		<tr>
 			<th>게시물번호</th>
+			<th><input type="checkbox" id="selectAll"/>모두선택</th>
 			<th>종류</th>
 			<th>제목</th>
 			<th>진행상태</th>
@@ -30,9 +38,24 @@
 				<c:forEach var="banner" items="${bannerList.content}">
 					<tr>
 						<td>${banner.bannerId }</td>
+						<td><input type="checkbox" name="bannerCheckbox" class="bannerCheckbox" data-banner-id="${banner.bannerId}"/></td>
 						<td>${banner.bannerKind}</td>
 						<td><a href="/banner/${banner.bannerId}?page=${bannerList.number+1}">${banner.bannerName}</a></td>
-						<td>${banner.bannerStatus }</td>
+						<td>
+							<% 
+								LocalDateTime currentTime = LocalDateTime.now();  
+								request.setAttribute("currentTime", currentTime);
+							%>
+							<c:if test="${currentTime < banner.bannerStartTime}">
+								진행전
+							</c:if> 
+							<c:if test="${currentTime > banner.bannerStartTime && currentTime < banner.bannerEndTime}">
+								진행중
+							</c:if> 
+							<c:if test="${banner.bannerEndTime < currentTime}">
+								종료
+							</c:if> 
+						</td>
 					</tr>
 				</c:forEach>
 			</c:otherwise>
@@ -40,6 +63,7 @@
 	</table>
 	
 	<button type="button" onclick="bannerListAdd();">등록</button>
+	<button type="button" id="bannerCheckDelete" >삭제</button>
 	
 	<br>
 	
@@ -90,11 +114,15 @@
 		</ul>
 	</div>
 	
+<!-- 배너 전체선택 및 해제, 선택 삭제 기능 -->
+<jsp:include page="../banner/banner_js/bannerListCheckDelete.jsp"/>
+	
 
 <script type="text/javascript">
 	function bannerListAdd(){
 		location.href="/banner/listAdd";
 	}
+	
 </script>
 </body>
 </html>
