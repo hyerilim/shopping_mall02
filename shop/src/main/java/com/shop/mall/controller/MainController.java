@@ -1,8 +1,14 @@
 package com.shop.mall.controller;
 
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.shop.mall.dto.BannerDto;
+import com.shop.mall.service.BannerService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -10,8 +16,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MainController {
 
+	private final BannerService bannerService;
+	
 	@GetMapping("/")
-	public String mainPage() {
+	public String mainPage(Model model) {
+		
+		List<BannerDto> bannerList = bannerService.findAll();
+		model.addAttribute("bannerList", bannerList);
+		
 		return "jsp/main/home";
 	}
 	

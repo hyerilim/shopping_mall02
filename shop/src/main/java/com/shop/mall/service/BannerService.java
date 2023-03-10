@@ -165,16 +165,16 @@ public class BannerService {
 
 	}
 
-	// 배너 목록
-//	public List<BannerDto> findAll() {
-//		
-//		List<BannerEntity> bannerEntityList = bannerRepository.findAll();
-//		List<BannerDto> bannerDtoList = new ArrayList<>();
-//		for (BannerEntity bannerEntity : bannerEntityList) {
-//			bannerDtoList.add(BannerDto.toListBannerDto(bannerEntity));
-//		}
-//		return bannerDtoList;
-//	}
+	// 배너 목록(팝업창)
+	public List<BannerDto> findAll() {
+		
+		List<BannerEntity> bannerEntityList = bannerRepository.findAll();
+		List<BannerDto> bannerDtoList = new ArrayList<>();
+		for (BannerEntity bannerEntity : bannerEntityList) {
+			bannerDtoList.add(BannerDto.toListBannerDto(bannerEntity));
+		}
+		return bannerDtoList;
+	}
 
 	// 배너 상세조회
 	public BannerDto findById(Long id) {
@@ -413,4 +413,5 @@ public class BannerService {
 		return result;
 
 	}
+	
 }

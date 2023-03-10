@@ -37,14 +37,47 @@ public class BannerDto {
 	private List<Long> fileIdList; // 서버 저장용 파일 이름
 	private int fileAttached; // 파일 첨부 여부(첨부 1, 미첨부 0)
 	
-	// 배너 목록
-//	public static BannerDto toListBannerDto(BannerEntity bannerEntity) {
-//		BannerDto bannerDto = new BannerDto();
-//		bannerDto.setBannerId(bannerEntity.getId());
-//		bannerDto.setBannerName(bannerEntity.getBannerName());
-//		bannerDto.setBannerKind(bannerEntity.getBannerKind());
-//		
-//		// 시작일보다 크고 마지막일보다 작으면 진행중 그외에는 종료
+	// 배너 목록(팝업창)
+	public static BannerDto toListBannerDto(BannerEntity bannerEntity) {
+		BannerDto bannerDto = new BannerDto();
+		bannerDto.setBannerId(bannerEntity.getId());
+		bannerDto.setBannerName(bannerEntity.getBannerName());
+		bannerDto.setBannerKind(bannerEntity.getBannerKind());
+		bannerDto.setBannerStartTime(bannerEntity.getBannerStartTime());
+		bannerDto.setBannerEndTime(bannerEntity.getBannerEndTime());
+		
+		LocalDateTime currentTime = LocalDateTime.now();
+		
+		if(currentTime.isBefore(bannerDto.getBannerStartTime())) {
+			bannerDto.setBannerStatus(BannerStatus.진행전.toString());			
+		} else if(currentTime.isAfter(bannerDto.getBannerStartTime()) && currentTime.isBefore(bannerDto.getBannerEndTime())) {
+			bannerDto.setBannerStatus(BannerStatus.진행중.toString());			
+		} else if(currentTime.isAfter(bannerDto.getBannerEndTime())) {
+			bannerDto.setBannerStatus(BannerStatus.종료.toString());			
+		}
+		
+		
+			
+		
+		
+		if(bannerEntity.getFileAttached()==0) {
+			bannerDto.setFileAttached(bannerEntity.getFileAttached()); // 0
+		} else {
+			List<String> originalFileNameList = new ArrayList<>();
+			List<String> storedFileNameList = new ArrayList<>();
+			List<Long> fileIdList = new ArrayList<>();
+			bannerDto.setFileAttached(bannerEntity.getFileAttached()); // 1
+			for(BannerFileEntity bannerFileEntity : bannerEntity.getBannerFileEntities()) {
+				fileIdList.add(bannerFileEntity.getId());
+				originalFileNameList.add(bannerFileEntity.getOriginalFileName());
+				storedFileNameList.add(bannerFileEntity.getStoredFileName());
+			}
+			bannerDto.setFileIdList(fileIdList);
+			bannerDto.setOriginalFileNameList(originalFileNameList);
+			bannerDto.setStoredFileNameList(storedFileNameList);
+		}
+		
+		// 시작일보다 크고 마지막일보다 작으면 진행중 그외에는 종료
 //		Date today = new Date();
 //		LocalDateTime localDateTime = today.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 //		
@@ -56,9 +89,9 @@ public class BannerDto {
 //		} else {
 //			bannerDto.setBannerStatus(BannerStatus.종료.toString());
 //		}
-//		
-//		return bannerDto;
-//	}
+		
+		return bannerDto;
+	}
 	
 	// 배너 상세보기
 	public static BannerDto toDetailBannerDto(BannerEntity bannerEntity) {
@@ -129,5 +162,6 @@ public class BannerDto {
 		bannerDto.setBannerEndTime(bannerEndDateTime);
 		return bannerDto;
 	}
+
 
 }

@@ -34,8 +34,12 @@ public class BannerController {
 	private final BannerService bannerService;
 	
 	// 롤링 배너 페이지
-	@GetMapping("/banner")
-	public String bannerPage() {
+	@GetMapping("/banner/popup/{id}")
+	public String bannerPage(@PathVariable Long id, Model model) {
+		
+		BannerDto bannerDto = bannerService.findById(id);
+		model.addAttribute("banner", bannerDto);
+		
 		return "jsp/banner/banner";
 	}
 	

@@ -16,10 +16,50 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		cookiedata = document.cookie; 
-        if(cookiedata.indexOf("close=Y")<0){ 
-			window.open("banner","a","width=400, height=300, left=100, top=50");
-        }
+		
+		// 배너 상태
+		let bannerStatus;
+		
+		// 배너 아이디
+		let bannerId;
+		
+		// 배너 이름
+		let bannerName;
+		
+		// 쿠키 데이터
+		let cookiedata = document.cookie;
+		
+       	// 팝업창 생성 위치
+       	let left = 0;
+       	let top = 0;
+
+		console.log(document.cookie);
+		
+       	<c:forEach items="${bannerList}" var="bannerList">
+       		
+   			console.log("${bannerList.bannerId}");
+   			bannerId = "${bannerList.bannerId}";
+   			
+   			console.log("${bannerList.bannerName}");
+   			bannerName = "${bannerList.bannerName}";
+   			
+       		if(cookiedata.indexOf(bannerName+"="+bannerId)<0){          
+
+        		// 현재 배너상태가 진행중일때 팝업창 오픈
+        		console.log("${bannerList.bannerStatus}");
+        		bannerStatus="${bannerList.bannerStatus}";
+        		
+        		if(bannerStatus == "진행중"){
+        				
+	    			/* window.open(URL, 이름, 크기, 위치, 기타 등) 으로 속성이 이루어져 있는데 이름이 다르면 여러개의 창을 띄울 수 있다. */
+	    			window.open("banner/popup/"+bannerId, bannerName,'height=300, width=400, left='+ left + ', top='+ top);
+        	
+	    			left += 300;
+	    			top += 100;
+        		}
+        		
+			}
+    	</c:forEach>
         	
 		<!-- 관리자로 로그인하면 관리자 페이지로 이동 -->
 		<sec:authorize access="hasAnyAuthority('ROLE_ADMIN')">
