@@ -136,4 +136,5 @@ sourceSets{
 // 이 부분이 추가. 
 tasks.withType(JavaCompile) {
 	options.generatedSourceOutputDirectory = file(querydslSrcDir)
+	options.annotationProcessorGeneratedSourcesDirectory = file(querydslSrcDir)
 }
