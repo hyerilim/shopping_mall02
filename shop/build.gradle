@@ -106,6 +106,9 @@ dependencies {
 	// https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
 	// multipart등을 사용할수 있음
 	implementation 'commons-fileupload:commons-fileupload:1.5'
+	
+	testCompileOnly 'org.projectlombok:lombok' // 테스트 의존성 추가
+    testAnnotationProcessor 'org.projectlombok:lombok' // 테스트 의존성 추가
 
 
 }
