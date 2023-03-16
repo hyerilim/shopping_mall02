@@ -64,7 +64,6 @@ dependencies {
 	// https://mvnrepository.com/artifact/jakarta.mail/jakarta.mail-api
 	implementation 'jakarta.mail:jakarta.mail-api:2.1.0'
 
-
 	// JavaMailSender 인터페이스(JavaMailSenderImpl)를 사용하기 위해 필요로 합니다. 
 	// mail 라이브러리를 일일이 세팅을 할 필요 없이 몇 가지의 설정(MailSender Bean설정)만으로도 사용될 수 있도록 도와줍니다.
 	// JavaMailSender 인터페이스는 MIME 형식의 메일을 보낼 수 있도록 해줍니다.(javax.mail.MimeMessage 사용 가능)
@@ -105,8 +104,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
 	// multipart등을 사용할수 있음
 	implementation 'commons-fileupload:commons-fileupload:1.5'
-	
-	
+
 
 }
 
