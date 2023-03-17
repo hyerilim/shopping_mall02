@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -21,6 +22,8 @@ public class QItem extends EntityPathBase<Item> {
 
     public final QBaseEntity _super = new QBaseEntity(this);
 
+    public final ListPath<CartItem, QCartItem> cartItem = this.<CartItem, QCartItem>createList("cartItem", CartItem.class, QCartItem.class, PathInits.DIRECT2);
+
     //inherited
     public final StringPath createdBy = _super.createdBy;
 
@@ -28,12 +31,16 @@ public class QItem extends EntityPathBase<Item> {
 
     public final StringPath itemDetail = createString("itemDetail");
 
+    public final ListPath<ItemImg, QItemImg> itemImg = this.<ItemImg, QItemImg>createList("itemImg", ItemImg.class, QItemImg.class, PathInits.DIRECT2);
+
     public final StringPath itemNm = createString("itemNm");
 
     public final EnumPath<com.shop.mall.constant.ItemSellStatus> itemSellStatus = createEnum("itemSellStatus", com.shop.mall.constant.ItemSellStatus.class);
 
     //inherited
     public final StringPath modifiedBy = _super.modifiedBy;
+
+    public final ListPath<OrderItem, QOrderItem> orderItem = this.<OrderItem, QOrderItem>createList("orderItem", OrderItem.class, QOrderItem.class, PathInits.DIRECT2);
 
     public final NumberPath<Integer> price = createNumber("price", Integer.class);
 

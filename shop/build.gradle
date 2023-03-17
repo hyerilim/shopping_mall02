@@ -1,7 +1,7 @@
 buildscript {
-   ext {
-      queryDslVersion = '5.0.0'
-   }
+    ext {
+        queryDslVersion = "5.0.0"
+    }
 }
 
 plugins {
@@ -9,8 +9,6 @@ plugins {
 	id 'org.springframework.boot' version '3.0.2'
 	id 'io.spring.dependency-management' version '1.1.0'
 	
-	   //querydsl 추가
-   	id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
 }
 
 group = 'com.example'
@@ -53,8 +51,10 @@ dependencies {
 	//파라미터 값 검증
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-   //querydsl 추가
-	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    //querydsl 추가
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
+    implementation "com.querydsl:querydsl-core"
+    implementation "com.querydsl:querydsl-collections"
 	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
@@ -110,39 +110,27 @@ dependencies {
 	testCompileOnly 'org.projectlombok:lombok' // 테스트 의존성 추가
     testAnnotationProcessor 'org.projectlombok:lombok' // 테스트 의존성 추가
 
-
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
 
-//querydsl 추가 시작
-def querydslSrcDir = 'src/main/generated'
-querydsl{
-	library = "com.querydsl:querydsl-apt"
-	jpa = true
-	querydslSourcesDir = querydslSrcDir
-}
-compileQuerydsl{
-	options.annotationProcessorPath = configurations.querydsl
-}
-configurations {
-	querydsl.extendsFrom compileClasspath
-}
-sourceSets{
-	main{
-		java{
-			srcDirs = ['src/main/java', querydslSrcDir]
-		}
-	}
-}
+// QueryDSL 추가 설정
+// QueryDSL 생성 파일 위치 -> 이를 설정해주지 않으면 build 디렉토리에 생성되는데, 인텔리제이에서 문제가 될수도 있음
+// IntelliJ 빌드 시 스캔하는 영역과 Gradle 빌드 시 스캔하는 영역이 달라서 발생하는 오류 해결
+def generated = 'src/main/generated'
 
-// 이 부분이 추가. 
 tasks.withType(JavaCompile) {
-	options.generatedSourceOutputDirectory = file(querydslSrcDir)
+	options.getGeneratedSourceOutputDirectory().set(file(generated))
 }
 
+// java source set 에 QueryDSL Q class 위치 추가
+sourceSets {
+	main.java.srcDirs += [ generated ]
+}
+
+// gradle clean 시에 QClass 디렉토리 삭제
 clean {
-	delete file(querydslSrcDir)
+	delete file(generated)
 }
