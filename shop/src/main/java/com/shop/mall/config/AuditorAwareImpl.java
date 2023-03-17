@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 public class AuditorAwareImpl implements AuditorAware<String> {
 
-// 현재 로그인 한 사용자의	정보를 등록자와 수정자로 지정
+	// 현재 로그인 한 사용자의 정보를 등록자와 수정자로 지정
 	@Override
 	public Optional<String> getCurrentAuditor() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
