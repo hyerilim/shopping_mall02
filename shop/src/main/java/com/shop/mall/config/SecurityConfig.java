@@ -104,7 +104,7 @@ public class SecurityConfig {
 				.anyRequest().permitAll();
 
 		// 인증되지 않은 사용자가 리소스에 접근하였을 때 수행되는 핸들러를 등록합니다.
-		http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+		//http.exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
 
 		// Remember Me 인증
 		// JSESSIONID이 만료되거나 쿠키가 없을 지라도 어플리케이션이 사용자를 기억하는 기능이다.
