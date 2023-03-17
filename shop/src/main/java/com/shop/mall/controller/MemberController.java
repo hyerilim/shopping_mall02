@@ -41,7 +41,6 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shop.mall.OAuth.OAuthToken;
 import com.shop.mall.config.auth.PrincipalDetails;
 import com.shop.mall.dto.MemberFormDto;
 import com.shop.mall.entity.Member;
